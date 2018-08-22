@@ -1,0 +1,29 @@
+{
+  "_settings" : {
+    "folderAlbedo" : "./textures/albedo/",
+    "folderHeight" : "./textures/height/",
+    "folderNormal" : "./textures/normal/",
+    "folderEmissive" : "./textures/emissive/",
+    "defaultHeight" : "gamedata/textures/materials/blocks/heightSmoothnessSpecularity/neutral.png",
+    "defaultNormal" : "gamedata/textures/materials/blocks/normal/neutral.png",
+    "defaultEmissive" : "gamedata/textures/materials/blocks/emissiveMaskAlpha/neutral.png"
+  },
+  "angryguards.guardbowday" : {
+    "albedo" : "guardbowday"
+  },
+  "angryguards.guardbownight" : {
+    "albedo" : "guardbownight"
+  },
+  "angryguards.guardcrossbowday" : {
+    "albedo" : "guardcrossbowday"
+  },
+  "angryguards.guardcrossbownight" : {
+    "albedo" : "guardcrossbownight"
+  },
+  "angryguards.guardmatchlockgunday" : {
+    "albedo" : "guardmatchlockgunday"
+  },
+  "angryguards.guardmatchlockgunnight" : {
+    "albedo" : "guardmatchlockgunnight"
+  }
+}

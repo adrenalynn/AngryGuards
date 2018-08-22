@@ -1,0 +1,224 @@
+{
+  "angryguards.guardbowday" : {
+    "categories" : [
+      "jobs"
+    ],
+	"isSolid" : false,
+	"needsBase" : true,
+	"isRotatable" : true,
+    "icon" : "./icons/guardbowday.png",
+	"customData" : {
+		"colors" : ["#ff0000->#969696"]
+	},
+    "colliders" : {
+      "boxes" : [{"max":[0.5,-0.4,0.5],"min":[-0.5,-0.5,-0.5]}],
+      "collidePlayer" : false
+    },
+	"sideall" : "angryguards.guardbowday",
+	"rotatablex+" : "angryguards.guardbowdayx+",
+	"rotatablex-" : "angryguards.guardbowdayx-",
+	"rotatablez+" : "angryguards.guardbowdayz+",
+	"rotatablez-" : "angryguards.guardbowdayz-"
+  },
+  "angryguards.guardbowdayx+" : {
+    "parentType" : "angryguards.guardbowday",
+	"mesh" : "./meshes/guardjobx+.ply"
+  },
+  "angryguards.guardbowdayx-" : {
+    "parentType" : "angryguards.guardbowday",
+	"mesh" : "./meshes/guardjobx-.ply"
+  },
+  "angryguards.guardbowdayz+" : {
+    "parentType" : "angryguards.guardbowday",
+	"mesh" : "./meshes/guardjobz+.ply"
+  },
+  "angryguards.guardbowdayz-" : {
+    "parentType" : "angryguards.guardbowday",
+	"mesh" : "./meshes/guardjobz-.ply"
+  },
+  "angryguards.guardbownight" : {
+    "categories" : [
+      "jobs"
+    ],
+	"isSolid" : false,
+	"needsBase" : true,
+	"isRotatable" : true,
+    "icon" : "./icons/guardbownight.png",
+	"customData" : {
+		"colors" : ["#ff0000->#969696"]
+	},
+    "colliders" : {
+      "boxes" : [{"max":[0.5,-0.4,0.5],"min":[-0.5,-0.5,-0.5]}],
+      "collidePlayer" : false
+    },
+	"sideall" : "angryguards.guardbownight",
+	"rotatablex+" : "angryguards.guardbownightx+",
+	"rotatablex-" : "angryguards.guardbownightx-",
+	"rotatablez+" : "angryguards.guardbownightz+",
+	"rotatablez-" : "angryguards.guardbownightz-"
+  },
+  "angryguards.guardbownightx+" : {
+    "parentType" : "angryguards.guardbownight",
+	"mesh" : "./meshes/guardjobx+.ply"
+  },
+  "angryguards.guardbownightx-" : {
+    "parentType" : "angryguards.guardbownight",
+	"mesh" : "./meshes/guardjobx-.ply"
+  },
+  "angryguards.guardbownightz+" : {
+    "parentType" : "angryguards.guardbownight",
+	"mesh" : "./meshes/guardjobz+.ply"
+  },
+  "angryguards.guardbownightz-" : {
+    "parentType" : "angryguards.guardbownight",
+	"mesh" : "./meshes/guardjobz-.ply"
+  },
+  "angryguards.guardcrossbowday" : {
+    "categories" : [
+      "jobs"
+    ],
+	"isSolid" : false,
+	"needsBase" : true,
+	"isRotatable" : true,
+    "icon" : "./icons/guardcrossbowday.png",
+	"customData" : {
+		"colors" : ["#ff0000->#969696"]
+	},
+    "colliders" : {
+      "boxes" : [{"max":[0.5,-0.4,0.5],"min":[-0.5,-0.5,-0.5]}],
+      "collidePlayer" : false
+    },
+	"sideall" : "angryguards.guardcrossbowday",
+	"rotatablex+" : "angryguards.guardcrossbowdayx+",
+	"rotatablex-" : "angryguards.guardcrossbowdayx-",
+	"rotatablez+" : "angryguards.guardcrossbowdayz+",
+	"rotatablez-" : "angryguards.guardcrossbowdayz-"
+  },
+  "angryguards.guardcrossbowdayx+" : {
+    "parentType" : "angryguards.guardcrossbowday",
+	"mesh" : "./meshes/guardjobx+.ply"
+  },
+  "angryguards.guardcrossbowdayx-" : {
+    "parentType" : "angryguards.guardcrossbowday",
+	"mesh" : "./meshes/guardjobx-.ply"
+  },
+  "angryguards.guardcrossbowdayz+" : {
+    "parentType" : "angryguards.guardcrossbowday",
+	"mesh" : "./meshes/guardjobz+.ply"
+  },
+  "angryguards.guardcrossbowdayz-" : {
+    "parentType" : "angryguards.guardcrossbowday",
+	"mesh" : "./meshes/guardjobz-.ply"
+  },
+  "angryguards.guardcrossbownight" : {
+    "categories" : [
+      "jobs"
+    ],
+	"isSolid" : false,
+	"needsBase" : true,
+	"isRotatable" : true,
+    "icon" : "./icons/guardcrossbownight.png",
+	"customData" : {
+		"colors" : ["#ff0000->#969696"]
+	},
+    "colliders" : {
+      "boxes" : [{"max":[0.5,-0.4,0.5],"min":[-0.5,-0.5,-0.5]}],
+      "collidePlayer" : false
+    },
+	"sideall" : "angryguards.guardcrossbownight",
+	"rotatablex+" : "angryguards.guardcrossbownightx+",
+	"rotatablex-" : "angryguards.guardcrossbownightx-",
+	"rotatablez+" : "angryguards.guardcrossbownightz+",
+	"rotatablez-" : "angryguards.guardcrossbownightz-"
+  },
+  "angryguards.guardcrossbownightx+" : {
+    "parentType" : "angryguards.guardcrossbownight",
+	"mesh" : "./meshes/guardjobx+.ply"
+  },
+  "angryguards.guardcrossbownightx-" : {
+    "parentType" : "angryguards.guardcrossbownight",
+	"mesh" : "./meshes/guardjobx-.ply"
+  },
+  "angryguards.guardcrossbownightz+" : {
+    "parentType" : "angryguards.guardcrossbownight",
+	"mesh" : "./meshes/guardjobz+.ply"
+  },
+  "angryguards.guardcrossbownightz-" : {
+    "parentType" : "angryguards.guardcrossbownight",
+	"mesh" : "./meshes/guardjobz-.ply"
+  },
+  "angryguards.guardmatchlockgunday" : {
+    "categories" : [
+      "jobs"
+    ],
+	"isSolid" : false,
+	"needsBase" : true,
+	"isRotatable" : true,
+    "icon" : "./icons/guardmatchlockgunday.png",
+	"customData" : {
+		"colors" : ["#ff0000->#969696"]
+	},
+    "colliders" : {
+      "boxes" : [{"max":[0.5,-0.4,0.5],"min":[-0.5,-0.5,-0.5]}],
+      "collidePlayer" : false
+    },
+	"sideall" : "angryguards.guardmatchlockgunday",
+	"rotatablex+" : "angryguards.guardmatchlockgundayx+",
+	"rotatablex-" : "angryguards.guardmatchlockgundayx-",
+	"rotatablez+" : "angryguards.guardmatchlockgundayz+",
+	"rotatablez-" : "angryguards.guardmatchlockgundayz-"
+  },
+  "angryguards.guardmatchlockgundayx+" : {
+    "parentType" : "angryguards.guardmatchlockgunday",
+	"mesh" : "./meshes/guardjobx+.ply"
+  },
+  "angryguards.guardmatchlockgundayx-" : {
+    "parentType" : "angryguards.guardmatchlockgunday",
+	"mesh" : "./meshes/guardjobx-.ply"
+  },
+  "angryguards.guardmatchlockgundayz+" : {
+    "parentType" : "angryguards.guardmatchlockgunday",
+	"mesh" : "./meshes/guardjobz+.ply"
+  },
+  "angryguards.guardmatchlockgundayz-" : {
+    "parentType" : "angryguards.guardmatchlockgunday",
+	"mesh" : "./meshes/guardjobz-.ply"
+  },
+  "angryguards.guardmatchlockgunnight" : {
+    "categories" : [
+      "jobs"
+    ],
+	"isSolid" : false,
+	"needsBase" : true,
+	"isRotatable" : true,
+    "icon" : "./icons/guardmatchlockgunnight.png",
+	"customData" : {
+		"colors" : ["#ff0000->#969696"]
+	},
+    "colliders" : {
+      "boxes" : [{"max":[0.5,-0.4,0.5],"min":[-0.5,-0.5,-0.5]}],
+      "collidePlayer" : false
+    },
+	"sideall" : "angryguards.guardmatchlockgunnight",
+	"rotatablex+" : "angryguards.guardmatchlockgunnightx+",
+	"rotatablex-" : "angryguards.guardmatchlockgunnightx-",
+	"rotatablez+" : "angryguards.guardmatchlockgunnightz+",
+	"rotatablez-" : "angryguards.guardmatchlockgunnightz-"
+  },
+  "angryguards.guardmatchlockgunnightx+" : {
+    "parentType" : "angryguards.guardmatchlockgunnight",
+	"mesh" : "./meshes/guardjobx+.ply"
+  },
+  "angryguards.guardmatchlockgunnightx-" : {
+    "parentType" : "angryguards.guardmatchlockgunnight",
+	"mesh" : "./meshes/guardjobx-.ply"
+  },
+  "angryguards.guardmatchlockgunnightz+" : {
+    "parentType" : "angryguards.guardmatchlockgunnight",
+	"mesh" : "./meshes/guardjobz+.ply"
+  },
+  "angryguards.guardmatchlockgunnightz-" : {
+    "parentType" : "angryguards.guardmatchlockgunnight",
+	"mesh" : "./meshes/guardjobz-.ply"
+  }
+}

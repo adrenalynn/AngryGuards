@@ -1,0 +1,75 @@
+[
+  {
+    "defaultLimit" : 5,
+    "defaultPriority" : -100,
+	"isOptional": true,
+    "name" : "angryguards.crafter.guardbowday",
+    "requires" : [
+      { "amount": 1, "type": "coatedplanks" }
+    ],
+    "results" : [
+      { "type": "angryguards.guardbowday" }
+    ]
+  },
+  {
+    "defaultLimit" : 5,
+    "defaultPriority" : -100,
+	"isOptional": true,
+    "name" : "angryguards.crafter.guardbownight",
+    "requires" : [
+      { "amount": 1, "type": "coatedplanks" }
+    ],
+    "results" : [
+      { "type": "angryguards.guardbownight" }
+    ]
+  },
+  {
+    "defaultLimit" : 5,
+    "defaultPriority" : -100,
+	"isOptional": true,
+    "name" : "angryguards.crafter.guardcrossbowday",
+    "requires" : [
+      { "amount": 2, "type": "coatedplanks" }
+    ],
+    "results" : [
+      { "type": "angryguards.guardcrossbowday" }
+    ]
+  },
+  {
+    "defaultLimit" : 5,
+    "defaultPriority" : -100,
+	"isOptional": true,
+    "name" : "angryguards.crafter.guardcrossbownight",
+    "requires" : [
+      { "amount": 2, "type": "coatedplanks" }
+    ],
+    "results" : [
+      { "type": "angryguards.guardcrossbownight" }
+    ]
+  },
+  {
+    "defaultLimit" : 5,
+    "defaultPriority" : -100,
+	"isOptional": true,
+    "name" : "angryguards.crafter.guardmatchlockgunday",
+    "requires" : [
+      { "amount": 3, "type": "coatedplanks" }
+    ],
+    "results" : [
+      { "type": "angryguards.guardmatchlockgunday" }
+    ]
+  },
+  {
+    "defaultLimit" : 5,
+    "defaultPriority" : -100,
+	"isOptional": true,
+    "name" : "angryguards.crafter.guardmatchlockgunnight",
+    "requires" : [
+      { "amount": 3, "type": "coatedplanks" }
+    ],
+    "results" : [
+      { "type": "angryguards.guardmatchlockgunnight" }
+    ]
+  }
+]
+

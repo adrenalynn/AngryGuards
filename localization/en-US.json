@@ -1,0 +1,32 @@
+{
+	"types" : {
+		"angryguards.guardbowday" : "Bow Guard (Day)",
+		"angryguards.guardbownight" : "Bow Guard (Night)",
+		"angryguards.guardcrossbowday" : "Crossbow Guard (Day)",
+		"angryguards.guardcrossbownight" : "Crossbow Guard (Night)",
+		"angryguards.guardmatchlockgunday" : "Matchlock Gun Guard (Day)",
+		"angryguards.guardmatchlockgunnight" : "Matchlock Gun Guard (Night)"
+	},
+	"typeuses" : {
+		"angryguards.guardbowday" : "Shoots almost everything in sight",
+		"angryguards.guardbownight" : "Shoots almost everything in sight",
+		"angryguards.guardcrossbowday" : "Not only angry but also well armed",
+		"angryguards.guardcrossbownight" : "Not only angry but also well armed",
+		"angryguards.guardmatchlockgunday" : "Armed and extremly dangerous",
+		"angryguards.guardmatchlockgunnight" : "Armed and extremly dangerous"
+	},
+	"sentences": {
+		"angryguards.research.angryguardbow": {
+			"name" : "Angry Bow Guard",
+			"description" : "Unlocks angry bow guards that shoot players instead of zombies"
+		},
+		"angryguards.research.angryguardcrossbow": {
+			"name" : "Angry Crossbow Guard",
+			"description" : "Unlocks angry crossbow guards that shoot players instead of zombies"
+		},
+		"angryguards.research.angryguardmatchlockgun": {
+			"name" : "Angry Matchlock Gun Guard",
+			"description" : "Unlocks angry matchlock gun guards that shoot players instead of zombies"
+		}
+	}
+}
