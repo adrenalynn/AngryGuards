@@ -29,7 +29,7 @@ namespace AngryGuards {
 					new InventoryItem(BuiltinBlocks.LeadBullet, 1),
 					new InventoryItem(BuiltinBlocks.GunpowderPouch, 1)
 				};
-				guardSettings.shootDamage = 150f;
+				guardSettings.shootDamage = 500f;
 				guardSettings.sleepSafetyPeriod = 1f;
 				guardSettings.sleepType = EGuardSleepType.Night;
 				guardSettings.typeXN = AngryGuards.Blocks.GuardMatchlockGunJobDayXN.ItemIndex;

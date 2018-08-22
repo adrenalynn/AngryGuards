@@ -28,7 +28,7 @@ namespace AngryGuards {
 				guardSettings.shootItem = new List<InventoryItem> {
 					new InventoryItem(BuiltinBlocks.CrossbowBolt, 1)
 				};
-				guardSettings.shootDamage = 65f;
+				guardSettings.shootDamage = 90f;
 				guardSettings.sleepSafetyPeriod = 1f;
 				guardSettings.sleepType = EGuardSleepType.Night;
 				guardSettings.typeXN = AngryGuards.Blocks.GuardCrossbowJobDayXN.ItemIndex;

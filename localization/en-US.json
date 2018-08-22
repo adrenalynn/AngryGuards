@@ -18,15 +18,15 @@
 	"sentences": {
 		"angryguards.research.angryguardbow": {
 			"name" : "Angry Bow Guard",
-			"description" : "Unlocks angry bow guards that shoot players instead of zombies"
+			"description" : "Unlocks angry guards with bows. They shoot players, not zombies."
 		},
 		"angryguards.research.angryguardcrossbow": {
 			"name" : "Angry Crossbow Guard",
-			"description" : "Unlocks angry crossbow guards that shoot players instead of zombies"
+			"description" : "Unlocks angry guards with crossbows. When you really want to get them."
 		},
 		"angryguards.research.angryguardmatchlockgun": {
 			"name" : "Angry Matchlock Gun Guard",
-			"description" : "Unlocks angry matchlock gun guards that shoot players instead of zombies"
+			"description" : "Unlocks angry guards with matchlock guns. For a really rainy day - for them, not you."
 		}
 	}
 }

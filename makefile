@@ -1,7 +1,7 @@
 # variables
 modname = AngryGuards
 version = $(shell cat modInfo.json | awk '/"version"/ {print $$3}' | head -1 | sed 's/[",]//g')
-basedir = "../../../"
+basedir = "../../../../"
 build_dir = "adrenalynn/$(modname)"
 dllname = $(modname).dll
 zipname = $(fullname)-$(version).zip
