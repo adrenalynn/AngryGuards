@@ -4,7 +4,7 @@ version = $(shell cat modInfo.json | awk '/"version"/ {print $$3}' | head -1 | s
 basedir = "../../../../"
 build_dir = "adrenalynn/$(modname)"
 dllname = $(modname).dll
-zipname = $(fullname)-$(version).zip
+zipname = $(modname)-$(version).zip
 zip_files_extra = "types.json" "texturemapping.json" "recipes_crafter.json" "icons" "localization" "textures" "meshes"
 
 build:
