@@ -8,7 +8,7 @@ Those guards will hurt! Not their owner, of course, only enemy players.
 **/gobalfriendly { add | list | remove } [playername]** To add, list or remove players from a global friendly list. Requires permission **mods.angryguards.global** to use
 
 ## Settings
-To be able to adjust the damage settings copy the file **angryguards-config.json** into your world savegame folder. Damage, Range and reload speed can be adjusted.
+To adjust the damage settings copy the file **angryguards-config.json** into your world savegame folder. Damage, range and reload speed can be adjusted.
 
 
 This mod uses icons from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> licensed under Creative Commons <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a><br>
