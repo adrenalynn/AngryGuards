@@ -3,9 +3,12 @@
 This mod adds new bow, crossbow and matchlock gun guards that shoot players instead of zombies. Unlock them via research. The crafter(workbench) gets recipes to place guard spots, place those items to create guard spots.
 Those guards will hurt! Not their owner, of course, only enemy players.
 
-**/friendly { add | list | remove } [playername]** To add, list or remove friendly players that your guards will not shoot at. This command is usable for all players
+## Commands
+**/friendly { add | list | remove } [playername]**
+To add, list or remove friendly players that your guards will not shoot at. This command is usable for all players
 
-**/gobalfriendly { add | list | remove } [playername]** To add, list or remove players from a global friendly list. Requires permission **mods.angryguards.global** to use
+**/gobalfriendly { add | list | remove } [playername]**
+To add, list or remove players from the global friendly list. Requires permission **mods.angryguards.global** to use
 
 ## Settings
 To adjust the damage settings copy the file **angryguards-config.json** into your world savegame folder. Damage, range and reload speed can be adjusted.
