@@ -22,19 +22,19 @@ namespace AngryGuards {
 				GuardSettings guardSettings = new GuardSettings();
 				guardSettings.cooldownMissingItem = 1.5f;
 				guardSettings.cooldownSearchingTarget = 0.5f;
-				guardSettings.cooldownShot = 8f;
-				guardSettings.range = 25;
+				guardSettings.shootDamage = (float)AngryGuards.Crossbow.Damage;
+				guardSettings.cooldownShot = (float)AngryGuards.Crossbow.Reload;
+				guardSettings.range = AngryGuards.Crossbow.Range;
 				guardSettings.recruitmentItem = new InventoryItem(BuiltinBlocks.Crossbow, 1);
 				guardSettings.shootItem = new List<InventoryItem> {
 					new InventoryItem(BuiltinBlocks.CrossbowBolt, 1)
 				};
-				guardSettings.shootDamage = 90f;
 				guardSettings.sleepSafetyPeriod = 1f;
 				guardSettings.sleepType = EGuardSleepType.Night;
-				guardSettings.typeXN = AngryGuards.Blocks.GuardCrossbowJobDayXN.ItemIndex;
-				guardSettings.typeXP = AngryGuards.Blocks.GuardCrossbowJobDayXP.ItemIndex;
-				guardSettings.typeZN = AngryGuards.Blocks.GuardCrossbowJobDayZN.ItemIndex;
-				guardSettings.typeZP = AngryGuards.Blocks.GuardCrossbowJobDayZP.ItemIndex;
+				guardSettings.typeXN = ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbowdayx-");
+				guardSettings.typeXP = ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbowdayx+");
+				guardSettings.typeZN = ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbowdayz-");
+				guardSettings.typeZP = ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbowdayz+");
 				guardSettings.OnShootAudio = "bowShoot";
 				guardSettings.OnHitAudio = "fleshHit";
 				AngryGuardCrossbowDayJob.CachedSettings = guardSettings;

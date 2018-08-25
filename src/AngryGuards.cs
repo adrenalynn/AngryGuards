@@ -1,4 +1,7 @@
+using System;
+using System.IO;
 using Pipliz;
+using Pipliz.JSON;
 using Pipliz.Mods.APIProvider.Jobs;
 using ChatCommands;
 
@@ -10,11 +13,34 @@ namespace AngryGuards {
 		public const string NAMESPACE = "AngryGuards";
 		public const string PERMISSION_PREFIX = "mods.angryguards";
 
+		// weapon definition
+		public struct Weapon {
+			public int Damage, Reload, Range;
+
+			public Weapon(int d, int r, int l)
+			{
+				Damage = d;
+				Range = r;
+				Reload = l;
+			}
+		}
+		public static Weapon Bow = new Weapon(45, 20, 5);
+		public static Weapon Crossbow = new Weapon(85, 25, 8);
+		public static Weapon MatchlockGun = new Weapon(500, 30, 12);
+
+		private const string CONFIG_FILE = "angryguards-config.json";
+		private static string ConfigFilePath {
+			get {
+				return Path.Combine(Path.Combine("gamedata", "savegames"), Path.Combine(ServerManager.WorldName, CONFIG_FILE));
+			}
+		}
+
+		// initialize blocks and jobs
 		[ModLoader.ModCallback(ModLoader.EModCallbackType.AfterItemTypesDefined, NAMESPACE + ".RegisterJobs")]
 		[ModLoader.ModCallbackProvidesFor("pipliz.apiprovider.jobs.resolvetypes")]
 		public static void AfterItemTypesDefined()
 		{
-			Blocks.Setup();
+			LoadConfig();
 			BlockJobManagerTracker.Register<AngryGuardBowDayJob>("angryguards.guardbowday");
 			BlockJobManagerTracker.Register<AngryGuardBowNightJob>("angryguards.guardbownight");
 			BlockJobManagerTracker.Register<AngryGuardCrossbowDayJob>("angryguards.guardcrossbowday");
@@ -26,82 +52,52 @@ namespace AngryGuards {
 			CommandManager.RegisterCommand(new GlobalFriendlyCommand());
 		}
 
+		// Load config
+		public static void LoadConfig()
+		{
+			JSONNode configJson;
+			if (!JSON.Deserialize(ConfigFilePath, out configJson, false)) {
+				Log.Write($"{CONFIG_FILE} not found, using default values");
+				return;
+			}
+
+			Log.Write($"Loading config from {CONFIG_FILE}");
+			try {
+				JSONNode weaponJson;
+				if (configJson.TryGetAs("bow", out weaponJson)) {
+					Bow.Damage = weaponJson.GetAs<int>("damage");
+					Bow.Reload = weaponJson.GetAs<int>("reload");
+					Bow.Range = weaponJson.GetAs<int>("range");
+				}
+				if (configJson.TryGetAs("crossbow", out weaponJson)) {
+					Crossbow.Damage = weaponJson.GetAs<int>("damage");
+					Crossbow.Reload = weaponJson.GetAs<int>("reload");
+					Crossbow.Range = weaponJson.GetAs<int>("range");
+				}
+				if (configJson.TryGetAs("matchlockgun", out weaponJson)) {
+					MatchlockGun.Damage = weaponJson.GetAs<int>("damage");
+					MatchlockGun.Reload = weaponJson.GetAs<int>("reload");
+					MatchlockGun.Range = weaponJson.GetAs<int>("range");
+				}
+			} catch (Exception e) {
+				Log.Write($"Could not parse {CONFIG_FILE}: {e.Message}");
+			}
+
+			return;
+		}
+
+		// Load
 		[ModLoader.ModCallback(ModLoader.EModCallbackType.AfterWorldLoad, NAMESPACE + ".AfterWorldLoad")]
 		public static void AfterWorldLoad()
 		{
 			PlayerTracker.Load();
 		}
 
+		// Save
 		[ModLoader.ModCallback(ModLoader.EModCallbackType.OnQuit, NAMESPACE + ".OnQuit")]
 		public static void OnQuit()
 		{
 			PlayerTracker.Save();
-		}
-
-		public static class Blocks
-		{
-			public static ItemTypes.ItemType GuardBowJobDayXN;
-			public static ItemTypes.ItemType GuardBowJobDayXP;
-			public static ItemTypes.ItemType GuardBowJobDayZN;
-			public static ItemTypes.ItemType GuardBowJobDayZP;
-
-			public static ItemTypes.ItemType GuardBowJobNightXN;
-			public static ItemTypes.ItemType GuardBowJobNightXP;
-			public static ItemTypes.ItemType GuardBowJobNightZN;
-			public static ItemTypes.ItemType GuardBowJobNightZP;
-
-			public static ItemTypes.ItemType GuardCrossbowJobDayXN;
-			public static ItemTypes.ItemType GuardCrossbowJobDayXP;
-			public static ItemTypes.ItemType GuardCrossbowJobDayZN;
-			public static ItemTypes.ItemType GuardCrossbowJobDayZP;
-
-			public static ItemTypes.ItemType GuardCrossbowJobNightXN;
-			public static ItemTypes.ItemType GuardCrossbowJobNightXP;
-			public static ItemTypes.ItemType GuardCrossbowJobNightZN;
-			public static ItemTypes.ItemType GuardCrossbowJobNightZP;
-
-			public static ItemTypes.ItemType GuardMatchlockGunJobDayXN;
-			public static ItemTypes.ItemType GuardMatchlockGunJobDayXP;
-			public static ItemTypes.ItemType GuardMatchlockGunJobDayZN;
-			public static ItemTypes.ItemType GuardMatchlockGunJobDayZP;
-
-			public static ItemTypes.ItemType GuardMatchlockGunJobNightXN;
-			public static ItemTypes.ItemType GuardMatchlockGunJobNightXP;
-			public static ItemTypes.ItemType GuardMatchlockGunJobNightZN;
-			public static ItemTypes.ItemType GuardMatchlockGunJobNightZP;
-
-			public static void Setup()
-			{
-				GuardBowJobDayXN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardbowdayx-"));
-				GuardBowJobDayXP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardbowdayx+"));
-				GuardBowJobDayZN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardbowdayz-"));
-				GuardBowJobDayZP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardbowdayz+"));
-
-				GuardBowJobNightXN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardbownightx-"));
-				GuardBowJobNightXP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardbownightx+"));
-				GuardBowJobNightZN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardbownightz-"));
-				GuardBowJobNightZP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardbownightz+"));
-
-				GuardCrossbowJobDayXN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbowdayx-"));
-				GuardCrossbowJobDayXP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbowdayx+"));
-				GuardCrossbowJobDayZN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbowdayz-"));
-				GuardCrossbowJobDayZP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbowdayz+"));
-
-				GuardCrossbowJobNightXN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbownightx-"));
-				GuardCrossbowJobNightXP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbownightx+"));
-				GuardCrossbowJobNightZN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbownightz-"));
-				GuardCrossbowJobNightZP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardcrossbownightz+"));
-
-				GuardMatchlockGunJobDayXN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgundayx-"));
-				GuardMatchlockGunJobDayXP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgundayx+"));
-				GuardMatchlockGunJobDayZN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgundayz-"));
-				GuardMatchlockGunJobDayZP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgundayz+"));
-
-				GuardMatchlockGunJobNightXN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgunnightx-"));
-				GuardMatchlockGunJobNightXP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgunnightx+"));
-				GuardMatchlockGunJobNightZN = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgunnightz-"));
-				GuardMatchlockGunJobNightZP = ItemTypes.GetType(ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgunnightz+"));
-			}
 		}
 
 	} // class

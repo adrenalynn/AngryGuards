@@ -17,7 +17,7 @@ namespace AngryGuards {
 		// global friendly list (admin, staff, ...)
 		private static List<Players.Player> globalFriendly = new List<Players.Player>();
 
-		private const string CONFIG_FILE = "angryguards.json";
+		private const string CONFIG_FILE = "angryguards-friendly.json";
 		private static string ConfigFilePath {
 			get {
 				return Path.Combine(Path.Combine("gamedata", "savegames"), Path.Combine(ServerManager.WorldName, CONFIG_FILE));

@@ -1,0 +1,17 @@
+{
+	"bow": {
+		"damage": 45,
+		"range": 20,
+		"reload": 5
+	},
+	"crossbow" : {
+		"damage": 85,
+		"range": 25,
+		"reload": 8
+	},
+	"matchlockgun" : {
+		"damage": 500,
+		"range": 30,
+		"reload": 12 
+	}
+}

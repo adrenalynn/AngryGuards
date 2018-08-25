@@ -10,6 +10,7 @@ namespace AngryGuards {
 		public new Players.Player target;
 		public Vector3 eyePosition;
 
+		// Shoot
 		public override void OnShoot()
 		{
 			if (this.guardSettings.OnShootAudio != null) {
@@ -22,9 +23,11 @@ namespace AngryGuards {
 			positionToAimFor[1] += 1;
 			Vector3 normalized = Vector3.Normalize(positionToAimFor - this.eyePosition);
 			ServerManager.SendParticleTrail(this.eyePosition + normalized * 0.15f, positionToAimFor - normalized * 0.15f, Pipliz.Random.NextFloat (1.5f, 2.5f));
+
 			Players.TakeHit(this.target, this.guardSettings.shootDamage, (object)base.usedNPC, ModLoader.OnHitData.EHitSourceType.NPC);
 		}
 
+		// do guard duty
 		public override void OnNPCAtJob(ref NPCBase.NPCState state)
 		{
 			this.eyePosition = base.position.Vector;

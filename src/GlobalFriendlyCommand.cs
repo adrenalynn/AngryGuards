@@ -22,7 +22,7 @@ namespace AngryGuards
 
 		public bool TryDoCommand(Players.Player causedBy, string chattext)
 		{
-			if (!PermissionsManager.CheckAndWarnPermission (causedBy, AngryGuards.PERMISSION_PREFIX + ".global"))  {
+			if (!PermissionsManager.CheckAndWarnPermission(causedBy, AngryGuards.PERMISSION_PREFIX + ".global"))  {
 				return true;
 			}
 

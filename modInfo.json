@@ -2,7 +2,7 @@
   {
     "name" : "angryguards",
     "namepretty" : "Angry Guards",
-    "version" : "6.3.2",
+    "version" : "6.3.3",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
@@ -25,6 +25,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "6.3.3", "notes": [
+			"weapon settings are now editable, copy angryguards-config.json into the world save directory"
+		] },
 		{ "version": "6.3.2", "notes": [
 			"command /friendly to define friendly players the guard will not shoot at",
 			"/globalfriendly to define a server wide list (permission mods.angryguards.global)"

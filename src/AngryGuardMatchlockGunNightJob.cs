@@ -22,20 +22,20 @@ namespace AngryGuards {
 				GuardSettings guardSettings = new GuardSettings();
 				guardSettings.cooldownMissingItem = 1.5f;
 				guardSettings.cooldownSearchingTarget = 0.5f;
-				guardSettings.cooldownShot = 12f;
-				guardSettings.range = 30;
+				guardSettings.shootDamage = (float)AngryGuards.MatchlockGun.Damage;
+				guardSettings.cooldownShot = (float)AngryGuards.MatchlockGun.Reload;
+				guardSettings.range = AngryGuards.MatchlockGun.Range;
 				guardSettings.recruitmentItem = new InventoryItem(BuiltinBlocks.MatchlockGun, 1);
 				guardSettings.shootItem = new List<InventoryItem> {
 					new InventoryItem(BuiltinBlocks.LeadBullet, 1),
 					new InventoryItem(BuiltinBlocks.GunpowderPouch, 1)
 				};
-				guardSettings.shootDamage = 500f;
 				guardSettings.sleepSafetyPeriod = 1f;
 				guardSettings.sleepType = EGuardSleepType.Day;
-				guardSettings.typeXN = AngryGuards.Blocks.GuardMatchlockGunJobNightXN.ItemIndex;
-				guardSettings.typeXP = AngryGuards.Blocks.GuardMatchlockGunJobNightXP.ItemIndex;
-				guardSettings.typeZN = AngryGuards.Blocks.GuardMatchlockGunJobNightZN.ItemIndex;
-				guardSettings.typeZP = AngryGuards.Blocks.GuardMatchlockGunJobNightZP.ItemIndex;
+				guardSettings.typeXN = ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgunnightx-");
+				guardSettings.typeXP = ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgunnightx+");
+				guardSettings.typeZN = ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgunnightz-");
+				guardSettings.typeZP = ItemTypes.IndexLookup.GetIndex("angryguards.guardmatchlockgunnightz+");
 				guardSettings.OnShootAudio = "matchlock";
 				guardSettings.OnHitAudio = "fleshHit";
 				AngryGuardMatchlockGunNightJob.CachedSettings = guardSettings;
