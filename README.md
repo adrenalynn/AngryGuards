@@ -10,8 +10,10 @@ Those guards will hurt! Not their owner, of course, only enemy players.
 ## Settings
 To adjust the damage settings copy the file **angryguards-config.json** into your world savegame folder. Damage, range and reload speed can be adjusted.
 
+## License
+The mod itself is licensed under the <a href="LICENSE">MIT License</a>.
 
-This mod uses icons from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> licensed under Creative Commons <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a><br>
+It uses icons from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> licensed under Creative Commons <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a><br>
 Sun by <a href="https://www.flaticon.com/authors/dinosoftlabs" title="DinosoftLabs">DinosoftLabs</a><br>
 Moon by <a href="https://www.flaticon.com/authors/swifticons" title="Swifticons">Swifticons</a><br>
 Bow by <a href="http://www.freepik.com" title="Freepik">Freepik</a><br>
