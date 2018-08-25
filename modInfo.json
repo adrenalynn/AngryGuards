@@ -2,7 +2,7 @@
   {
     "name" : "angryguards",
     "namepretty" : "Angry Guards",
-    "version" : "6.3.1",
+    "version" : "6.3.2",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
@@ -23,6 +23,12 @@
 		"npcType": "pipliz.crafter",
 		"limitsUIMapping": [ "workbench" ]
 	  }
-    ]
+    ],
+	"patchnotes": [
+		{ "version": "6.3.2", "notes": [
+			"command /friendly to define friendly players the guard will not shoot at",
+			"/globalfriendly to define a server wide list (permission mods.angryguards.global)"
+		] }
+	]
   }
 ]

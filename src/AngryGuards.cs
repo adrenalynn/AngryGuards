@@ -1,5 +1,6 @@
 using Pipliz;
 using Pipliz.Mods.APIProvider.Jobs;
+using ChatCommands;
 
 namespace AngryGuards {
 
@@ -20,8 +21,21 @@ namespace AngryGuards {
 			BlockJobManagerTracker.Register<AngryGuardCrossbowNightJob>("angryguards.guardcrossbownight");
 			BlockJobManagerTracker.Register<AngryGuardMatchlockGunDayJob>("angryguards.guardmatchlockgunday");
 			BlockJobManagerTracker.Register<AngryGuardMatchlockGunNightJob>("angryguards.guardmatchlockgunnight");
-			// CommandManager.RegisterCommand(new FriendlyCommand());
 			Log.Write("Angry Guards completed registering jobs");
+			CommandManager.RegisterCommand(new FriendlyCommand());
+			CommandManager.RegisterCommand(new GlobalFriendlyCommand());
+		}
+
+		[ModLoader.ModCallback(ModLoader.EModCallbackType.AfterWorldLoad, NAMESPACE + ".AfterWorldLoad")]
+		public static void AfterWorldLoad()
+		{
+			PlayerTracker.Load();
+		}
+
+		[ModLoader.ModCallback(ModLoader.EModCallbackType.OnQuit, NAMESPACE + ".OnQuit")]
+		public static void OnQuit()
+		{
+			PlayerTracker.Save();
 		}
 
 		public static class Blocks
