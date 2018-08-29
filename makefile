@@ -5,7 +5,7 @@ basedir = "../../../../"
 build_dir = "adrenalynn/$(modname)"
 dllname = $(modname).dll
 zipname = $(modname)-$(version).zip
-zip_files_extra = "types.json" "texturemapping.json" "recipes_crafter.json" "icons" "localization" "textures" "meshes"
+zip_files_extra = "types.json" "angryguards-config.json" "texturemapping.json" "recipes_crafter.json" "icons" "localization" "textures" "meshes"
 
 build:
 	mcs /target:library -r:$(basedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(basedir)/gamedata/mods/Pipliz/APIProvider/APIProvider.dll,$(basedir)/gamedata/mods/Pipliz/BaseGame/BaseGame.dll,$(basedir)/colonyserver_Data/Managed/UnityEngine.dll -out:"$(dllname)" -sdk:2 src/*.cs src/Research/*.cs

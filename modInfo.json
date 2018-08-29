@@ -2,7 +2,7 @@
   {
     "name" : "angryguards",
     "namepretty" : "Angry Guards",
-    "version" : "6.3.3",
+    "version" : "6.3.4",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
@@ -25,6 +25,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "6.3.4", "notes": [
+			"fixed the config file not being included in the release"
+		] },
 		{ "version": "6.3.3", "notes": [
 			"weapon settings are now editable, copy angryguards-config.json into the world save directory"
 		] },
