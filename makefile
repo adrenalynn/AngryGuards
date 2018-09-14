@@ -1,25 +1,42 @@
 # variables
 modname = AngryGuards
-version = $(shell cat modInfo.json | awk '/"version"/ {print $$3}' | head -1 | sed 's/[",]//g')
-basedir = "../../../../"
-build_dir = "adrenalynn/$(modname)"
 dllname = $(modname).dll
+version = $(shell cat modInfo.json | awk '/"version"/ {print $$3}' | head -1 | sed 's/[",]//g')
 zipname = $(modname)-$(version).zip
 zip_files_extra = "types.json" "angryguards-config.json" "texturemapping.json" "recipes_crafter.json" "icons" "localization" "textures" "meshes"
+builddir = "adrenalynn/$(modname)"
+gamedir = /local/games/Steam/steamapps/common/Colony\ Survival
 
-build:
-	mcs /target:library -r:$(basedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(basedir)/gamedata/mods/Pipliz/APIProvider/APIProvider.dll,$(basedir)/gamedata/mods/Pipliz/BaseGame/BaseGame.dll,$(basedir)/colonyserver_Data/Managed/UnityEngine.dll -out:"$(dllname)" -sdk:2 src/*.cs src/Research/*.cs
+$(dllname): src/*.cs
+	mcs /target:library -r:$(gamedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(gamedir)/gamedata/mods/Pipliz/APIProvider/APIProvider.dll,$(gamedir)/gamedata/mods/Pipliz/BaseGame/BaseGame.dll,$(basedir)/colonyserver_Data/Managed/UnityEngine.dll -out:"$(dllname)" -sdk:2 src/*.cs src/Research/*.cs
 
-clean:
-	rm -f "$(dllname)"
-	rm -rf $(build_dir)
+$(zipname): $(dllname)
+	rm $(zipname)
+	mkdir -p $(builddir)
+	cp modInfo.json LICENSE README.md $(dllname) $(zip_files_extra) $(builddir)/
+	zip -r $(zipname) $(builddir)
+	rm -r $(builddir)/*
+	rmdir -p $(builddir)
 
-checkjson:
-	find . -type f -name "*.json" | while read f; do echo $$f; json_pp <$$f >/dev/null; done
+.PHONY: build default clean all zip install serverlog clientlog
+build: $(dllname)
+
+zip: $(zipname)
 
 default: build
 
 all: checkjson build zip
+
+clean:
+	-rm $(dllname) $(zipname)
+	-rm -r $(builddir)
+
+install: build zip
+	-rm -r $(gamedir)/gamedata/mods/$(builddir)
+	unzip $(zipname) -d $(gamedir)/gamedata/mods
+
+checkjson:
+	find . -type f -name "*.json" | while read f; do echo $$f; json_pp <$$f >/dev/null; done
 
 serverlog:
 	less ../../../logs/server/$$(ls -1rt ../../../logs/server | tail -1)
@@ -27,9 +44,3 @@ serverlog:
 clientlog:
 	less ../../../logs/client/$$(ls -1rt ../../../logs/client | tail -1)
 
-zip: default
-	rm -f "$(zipname)"
-	mkdir -p $(build_dir)
-	cp -rp modInfo.json LICENSE README.md $(dllname) $(zip_files_extra) $(build_dir)/
-	zip -r "$(zipname)" $(build_dir)
-	rm -r $(build_dir)
