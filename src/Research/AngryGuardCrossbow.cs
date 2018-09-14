@@ -1,5 +1,4 @@
-using Pipliz.Mods.APIProvider.Science;
-using Server.Science;
+using Science;
 
 namespace AngryGuards {
 

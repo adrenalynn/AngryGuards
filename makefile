@@ -8,7 +8,7 @@ builddir = "adrenalynn/$(modname)"
 gamedir = /local/games/Steam/steamapps/common/Colony\ Survival
 
 $(dllname): src/*.cs
-	mcs /target:library -r:$(gamedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(gamedir)/gamedata/mods/Pipliz/APIProvider/APIProvider.dll,$(gamedir)/gamedata/mods/Pipliz/BaseGame/BaseGame.dll,$(basedir)/colonyserver_Data/Managed/UnityEngine.dll -out:"$(dllname)" -sdk:2 src/*.cs src/Research/*.cs
+	mcs /target:library -r:$(gamedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(gamedir)/gamedata/mods/Pipliz/APIProvider/APIProvider.dll,$(gamedir)/gamedata/mods/Pipliz/BaseGame/BaseGame.dll,$(gamedir)/colonyserver_Data/Managed/UnityEngine.CoreModule.dll -out:"$(dllname)" -sdk:2 src/*.cs src/Research/*.cs
 
 $(zipname): $(dllname)
 	rm $(zipname)

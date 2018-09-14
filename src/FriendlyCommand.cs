@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using Pipliz.Chatting;
-using ChatCommands;
+using Chatting;
 
 namespace AngryGuards
 {

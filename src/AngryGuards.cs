@@ -2,8 +2,8 @@ using System;
 using System.IO;
 using Pipliz;
 using Pipliz.JSON;
-using Pipliz.Mods.APIProvider.Jobs;
-using ChatCommands;
+using Pipliz.APIProvider.Jobs;
+using Chatting;
 
 namespace AngryGuards {
 
@@ -37,16 +37,30 @@ namespace AngryGuards {
 
 		// initialize blocks and jobs
 		[ModLoader.ModCallback(ModLoader.EModCallbackType.AfterItemTypesDefined, NAMESPACE + ".RegisterJobs")]
-		[ModLoader.ModCallbackProvidesFor("pipliz.apiprovider.jobs.resolvetypes")]
+		[ModLoader.ModCallbackDependsOn("create_servermanager_trackers")]
+		[ModLoader.ModCallbackProvidesFor("create_savemanager")]
 		public static void AfterItemTypesDefined()
 		{
 			LoadConfig();
-			BlockJobManagerTracker.Register<AngryGuardBowDayJob>("angryguards.guardbowday");
-			BlockJobManagerTracker.Register<AngryGuardBowNightJob>("angryguards.guardbownight");
-			BlockJobManagerTracker.Register<AngryGuardCrossbowDayJob>("angryguards.guardcrossbowday");
-			BlockJobManagerTracker.Register<AngryGuardCrossbowNightJob>("angryguards.guardcrossbownight");
-			BlockJobManagerTracker.Register<AngryGuardMatchlockGunDayJob>("angryguards.guardmatchlockgunday");
-			BlockJobManagerTracker.Register<AngryGuardMatchlockGunNightJob>("angryguards.guardmatchlockgunnight");
+
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
+				new BlockJobManager<AngryGuardJobInstance>(new AngryBowGuardSettings(EGuardSleepType.Day)));
+
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
+				new BlockJobManager<AngryGuardJobInstance>(new AngryBowGuardSettings(EGuardSleepType.Night)));
+
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
+				new BlockJobManager<AngryGuardJobInstance>(new AngryCrossbowGuardSettings(EGuardSleepType.Day)));
+
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
+				new BlockJobManager<AngryGuardJobInstance>(new AngryCrossbowGuardSettings(EGuardSleepType.Night)));
+
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
+				new BlockJobManager<AngryGuardJobInstance>(new AngryMatchlockGunGuardSettings(EGuardSleepType.Day)));
+
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
+				new BlockJobManager<AngryGuardJobInstance>(new AngryMatchlockGunGuardSettings(EGuardSleepType.Night)));
+
 			Log.Write("Angry Guards completed registering jobs");
 			CommandManager.RegisterCommand(new FriendlyCommand());
 			CommandManager.RegisterCommand(new GlobalFriendlyCommand());
