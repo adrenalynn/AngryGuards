@@ -38,6 +38,7 @@ namespace AngryGuards {
 		// initialize blocks and jobs
 		[ModLoader.ModCallback(ModLoader.EModCallbackType.AfterItemTypesDefined, NAMESPACE + ".RegisterJobs")]
 		[ModLoader.ModCallbackDependsOn("create_servermanager_trackers")]
+		[ModLoader.ModCallbackDependsOn("pipliz.server.loadnpctypes")]
 		[ModLoader.ModCallbackProvidesFor("create_savemanager")]
 		public static void AfterItemTypesDefined()
 		{
@@ -45,14 +46,14 @@ namespace AngryGuards {
 
 			// Bow Guard
 			AngryGuardJobSettings BowGuardDay = new AngryGuardJobSettings(
-				"angryguards.guardbowday", "angryguards.guardbowday",
+				"angryguards.guardbowday", "pipliz.guardbowday",
 				AngryGuardJobSettings.EGuardSleepType.Night,
 				Bow.Damage, Bow.Range, Bow.Reload, "bowShoot",
 				new InventoryItem(BlockTypes.BuiltinBlocks.BronzeArrow, 1),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Bow, 1)
 			);
 			AngryGuardJobSettings BowGuardNight = new AngryGuardJobSettings(
-				"angryguards.guardbownight", "angryguards.guardbownight",
+				"angryguards.guardbownight", "pipliz.guardbownight",
 				AngryGuardJobSettings.EGuardSleepType.Day,
 				Bow.Damage, Bow.Range, Bow.Reload, "bowShoot",
 				new InventoryItem(BlockTypes.BuiltinBlocks.BronzeArrow, 1),
@@ -61,14 +62,14 @@ namespace AngryGuards {
 
 			// Crossbow Guard
 			AngryGuardJobSettings CrossbowGuardDay = new AngryGuardJobSettings(
-				"angryguards.guardcrossbowday", "angryguards.guardcrossbowday",
+				"angryguards.guardcrossbowday", "pipliz.guardcrossbowday",
 				AngryGuardJobSettings.EGuardSleepType.Night,
 				Crossbow.Damage, Crossbow.Range, Crossbow.Reload, "bowShoot",
 				new InventoryItem(BlockTypes.BuiltinBlocks.CrossbowBolt, 1),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Crossbow, 1)
 			);
 			AngryGuardJobSettings CrossbowGuardNight = new AngryGuardJobSettings(
-				"angryguards.guardcrossbownight", "angryguards.guardcrossbownight",
+				"angryguards.guardcrossbownight", "pipliz.guardcrossbownight",
 				AngryGuardJobSettings.EGuardSleepType.Day,
 				Crossbow.Damage, Crossbow.Range, Crossbow.Reload, "bowShoot",
 				new InventoryItem(BlockTypes.BuiltinBlocks.CrossbowBolt, 1),
@@ -77,7 +78,7 @@ namespace AngryGuards {
 
 			// Matchlock Gun Guard
 			AngryGuardJobSettings MatchlockGunGuardDay = new AngryGuardJobSettings(
-				"angryguards.guardmatchlockgunday", "angryguards.guardmatchlockgunday",
+				"angryguards.guardmatchlockgunday", "pipliz.guardmatchlockday",
 				AngryGuardJobSettings.EGuardSleepType.Night,
 				MatchlockGun.Damage, MatchlockGun.Range, MatchlockGun.Reload, "matchlock",
 				new InventoryItem(BlockTypes.BuiltinBlocks.LeadBullet, 1),
@@ -87,7 +88,7 @@ namespace AngryGuards {
 			MatchlockGunGuardDay.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.LinenPouch, 1, 0.9);
 
 			AngryGuardJobSettings MatchlockGunGuardNight = new AngryGuardJobSettings(
-				"angryguards.guardmatchlockgunnight", "angryguards.guardmatchlockgunnight",
+				"angryguards.guardmatchlockgunnight", "pipliz.guardmatchlocknight",
 				AngryGuardJobSettings.EGuardSleepType.Day,
 				MatchlockGun.Damage, MatchlockGun.Range, MatchlockGun.Reload, "matchlock",
 				new InventoryItem(BlockTypes.BuiltinBlocks.LeadBullet, 1),

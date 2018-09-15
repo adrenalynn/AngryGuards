@@ -6,7 +6,7 @@
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
-      "0.7"
+      "0.7.0"
     ],
     "jsonFiles" : [
       { "fileType" : "addOrOverrideTextureMappingEntries",
