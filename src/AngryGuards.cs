@@ -43,23 +43,66 @@ namespace AngryGuards {
 		{
 			LoadConfig();
 
-			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
-				new BlockJobManager<AngryGuardJobInstance>(new AngryBowGuardSettings(EGuardSleepType.Day)));
+			// Bow Guard
+			AngryGuardJobSettings BowGuardDay = new AngryGuardJobSettings(
+				"angryguards.guardbowday", "angryguards.guardbowday",
+				AngryGuardJobSettings.EGuardSleepType.Night,
+				Bow.Damage, Bow.Range, Bow.Reload, "bowShoot",
+				new InventoryItem(BlockTypes.BuiltinBlocks.BronzeArrow, 1),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Bow, 1)
+			);
+			AngryGuardJobSettings BowGuardNight = new AngryGuardJobSettings(
+				"angryguards.guardbownight", "angryguards.guardbownight",
+				AngryGuardJobSettings.EGuardSleepType.Day,
+				Bow.Damage, Bow.Range, Bow.Reload, "bowShoot",
+				new InventoryItem(BlockTypes.BuiltinBlocks.BronzeArrow, 1),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Bow, 1)
+			);
 
-			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
-				new BlockJobManager<AngryGuardJobInstance>(new AngryBowGuardSettings(EGuardSleepType.Night)));
+			// Crossbow Guard
+			AngryGuardJobSettings CrossbowGuardDay = new AngryGuardJobSettings(
+				"angryguards.guardcrossbowday", "angryguards.guardcrossbowday",
+				AngryGuardJobSettings.EGuardSleepType.Night,
+				Crossbow.Damage, Crossbow.Range, Crossbow.Reload, "bowShoot",
+				new InventoryItem(BlockTypes.BuiltinBlocks.CrossbowBolt, 1),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Crossbow, 1)
+			);
+			AngryGuardJobSettings CrossbowGuardNight = new AngryGuardJobSettings(
+				"angryguards.guardcrossbownight", "angryguards.guardcrossbownight",
+				AngryGuardJobSettings.EGuardSleepType.Day,
+				Crossbow.Damage, Crossbow.Range, Crossbow.Reload, "bowShoot",
+				new InventoryItem(BlockTypes.BuiltinBlocks.CrossbowBolt, 1),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Crossbow, 1)
+			);
 
-			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
-				new BlockJobManager<AngryGuardJobInstance>(new AngryCrossbowGuardSettings(EGuardSleepType.Day)));
+			// Matchlock Gun Guard
+			AngryGuardJobSettings MatchlockGunGuardDay = new AngryGuardJobSettings(
+				"angryguards.guardmatchlockgunday", "angryguards.guardmatchlockgunday",
+				AngryGuardJobSettings.EGuardSleepType.Night,
+				MatchlockGun.Damage, MatchlockGun.Range, MatchlockGun.Reload, "matchlock",
+				new InventoryItem(BlockTypes.BuiltinBlocks.LeadBullet, 1),
+				new InventoryItem(BlockTypes.BuiltinBlocks.MatchlockGun, 1)
+			);
+			MatchlockGunGuardDay.ShootItem.Add(new InventoryItem(BlockTypes.BuiltinBlocks.GunpowderPouch, 1));
+			MatchlockGunGuardDay.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.LinenPouch, 1, 0.9);
 
-			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
-				new BlockJobManager<AngryGuardJobInstance>(new AngryCrossbowGuardSettings(EGuardSleepType.Night)));
+			AngryGuardJobSettings MatchlockGunGuardNight = new AngryGuardJobSettings(
+				"angryguards.guardmatchlockgunnight", "angryguards.guardmatchlockgunnight",
+				AngryGuardJobSettings.EGuardSleepType.Day,
+				MatchlockGun.Damage, MatchlockGun.Range, MatchlockGun.Reload, "matchlock",
+				new InventoryItem(BlockTypes.BuiltinBlocks.LeadBullet, 1),
+				new InventoryItem(BlockTypes.BuiltinBlocks.MatchlockGun, 1)
+			);
+			MatchlockGunGuardNight.ShootItem.Add(new InventoryItem(BlockTypes.BuiltinBlocks.GunpowderPouch, 1));
+			MatchlockGunGuardNight.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.LinenPouch, 1, 0.9);
 
-			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
-				new BlockJobManager<AngryGuardJobInstance>(new AngryMatchlockGunGuardSettings(EGuardSleepType.Day)));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(BowGuardDay));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(BowGuardNight));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(CrossbowGuardDay));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(CrossbowGuardNight));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(MatchlockGunGuardDay));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(MatchlockGunGuardNight));
 
-			ServerManager.BlockEntityCallbacks.RegisterEntityManager(
-				new BlockJobManager<AngryGuardJobInstance>(new AngryMatchlockGunGuardSettings(EGuardSleepType.Night)));
 
 			Log.Write("Angry Guards completed registering jobs");
 			CommandManager.RegisterCommand(new FriendlyCommand());

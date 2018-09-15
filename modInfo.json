@@ -2,11 +2,11 @@
   {
     "name" : "angryguards",
     "namepretty" : "Angry Guards",
-    "version" : "6.3.4",
+    "version" : "0.7.1",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
-      "0.6.3"
+      "0.7"
     ],
     "jsonFiles" : [
       { "fileType" : "addOrOverrideTextureMappingEntries",
@@ -25,6 +25,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "0.7.1", "notes": [
+			"updated to base game version 0.7"
+		] },
 		{ "version": "6.3.4", "notes": [
 			"fixed the config file not being included in the release"
 		] },

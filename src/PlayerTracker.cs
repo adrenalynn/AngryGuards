@@ -25,28 +25,28 @@ namespace AngryGuards {
 		}
 
 		// find non friendly targets within given range
-		public static Players.Player FindTarget(Players.Player owner, Vector3 position, int range)
+		public static Players.Player FindTarget(Colony owner, Vector3 position, int range)
 		{
 			Players.Player target = null;
 			float shortestDistance = range + 1.0f;
 
-			List<Players.Player> ownerFriends;
-			if (friendlyPlayers.ContainsKey(owner)) {
-				ownerFriends = friendlyPlayers[owner];
-			} else {
-				ownerFriends = new List<Players.Player>();
+			List<Players.Player> friendlies = new List<Players.Player>();
+			foreach (Players.Player ownerPlayer in owner.Owners) {
+				if (friendlyPlayers.ContainsKey(ownerPlayer)) {
+					friendlies.AddRange(friendlyPlayers[ownerPlayer]);
+				}
 			}
 
 			for (int i = 0; i < Players.CountConnected; i++) {
 				Players.Player candidate = Players.GetConnectedByIndex(i);
-				if (candidate == owner || ownerFriends.Contains(candidate) || globalFriendly.Contains(candidate)) {
+				if (friendlies.Contains(candidate) || globalFriendly.Contains(candidate)) {
 					continue;
 				}
 
 				Vector3 candidateEyePosition = candidate.Position;
 				candidateEyePosition[1] += 1;
 				float distance = Vector3.Distance(position, candidate.Position);
-				if (distance < shortestDistance && (General.Physics.Physics.CanSee(position, candidate.Position) || General.Physics.Physics.CanSee(position, candidateEyePosition))) {
+				if (distance < shortestDistance && (VoxelPhysics.CanSee(position, candidate.Position) || VoxelPhysics.CanSee(position, candidateEyePosition))) {
 					shortestDistance = distance;
 					target = candidate;
 				}

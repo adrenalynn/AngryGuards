@@ -1,4 +1,5 @@
 using Science;
+using Recipes;
 
 namespace AngryGuards {
 
@@ -17,10 +18,11 @@ namespace AngryGuards {
 			AddDependency("angryguards.research.angryguardbow");
 		}
 
-		public override void OnResearchComplete(ScienceManagerPlayer manager, EResearchCompletionReason reason)
+		public override void OnResearchComplete(ColonyScienceState manager, EResearchCompletionReason reason)
 		{
-			RecipeStorage.GetPlayerStorage(manager.Player).SetRecipeAvailability("angryguards.crafter.guardcrossbowday", true, "pipliz.crafter");
-			RecipeStorage.GetPlayerStorage(manager.Player).SetRecipeAvailability("angryguards.crafter.guardcrossbownight", true, "pipliz.crafter");
+			RecipeColony recipeData = manager.Colony.RecipeData;
+			recipeData.UnlockRecipe(new RecipeKey("angryguards.crafter.guardcrossbowday"));
+			recipeData.UnlockRecipe(new RecipeKey("angryguards.crafter.guardcrossbownight"));
 		}
 
 	}
