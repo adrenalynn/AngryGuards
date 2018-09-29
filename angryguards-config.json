@@ -1,4 +1,5 @@
 {
+	"guardmode" : "active",
 	"bow": {
 		"damage": 45,
 		"range": 20,

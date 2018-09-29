@@ -17,6 +17,10 @@ namespace AngryGuards {
 		// global friendly list (admin, staff, ...)
 		private static List<Players.Player> globalFriendly = new List<Players.Player>();
 
+		// enemy list per player (for passive guards)
+		private static Dictionary<Players.Player, List<Players.Player>> enemyPlayers =
+			new Dictionary<Players.Player, List<Players.Player>>();
+
 		private const string CONFIG_FILE = "angryguards-friendly.json";
 		private static string ConfigFilePath {
 			get {
@@ -37,9 +41,20 @@ namespace AngryGuards {
 				ownerFriends = new List<Players.Player>();
 			}
 
+			List<Players.Player> ownerEnemies;
+			if (enemyPlayers.ContainsKey(owner)) {
+				ownerEnemies = enemyPlayers[owner];
+			} else {
+				ownerEnemies = new List<Players.Player>();
+			}
+
 			for (int i = 0; i < Players.CountConnected; i++) {
 				Players.Player candidate = Players.GetConnectedByIndex(i);
 				if (candidate == owner || ownerFriends.Contains(candidate) || globalFriendly.Contains(candidate)) {
+					continue;
+				}
+
+				if (AngryGuards.ModeSetting == GuardMode.Passive && !ownerEnemies.Contains(candidate)) {
 					continue;
 				}
 
@@ -86,6 +101,23 @@ namespace AngryGuards {
 			return true;
 		}
 
+		// add a player to the enemy list (for passive mode)
+		public static bool AddEnemy(Players.Player owner, Players.Player target)
+		{
+			List<Players.Player> enemies;
+			if (!enemyPlayers.ContainsKey(owner)) {
+				enemies = new List<Players.Player>();
+				enemyPlayers[owner] = enemies;
+			} else {
+				enemies = enemyPlayers[owner];
+			}
+			if (enemies.Contains(target)) {
+				return false;
+			}
+			enemies.Add(target);
+			return true;
+		}
+
 		// remove a player from the per-player friendly list
 		public static bool RemoveFriendly(Players.Player owner, Players.Player target)
 		{
@@ -107,6 +139,21 @@ namespace AngryGuards {
 		{
 			names = string.Join(", ", globalFriendly.Select(x => x.Name).ToArray());
 			return true;
+		}
+
+		// check if friendly for a player
+		public static bool IsFriendly(Players.Player owner, Players.Player candidate)
+		{
+			if (friendlyPlayers.ContainsKey(owner)) {
+				List<Players.Player> ownerFriends = friendlyPlayers[owner];
+				if (ownerFriends.Contains(candidate)) {
+					return true;
+				}
+			}
+			if (globalFriendly.Contains(candidate)) {
+				return true;
+			}
+			return false;
 		}
 
 		// add global friendly

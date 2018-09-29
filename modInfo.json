@@ -2,7 +2,7 @@
   {
     "name" : "angryguards",
     "namepretty" : "Angry Guards",
-    "version" : "6.3.4",
+    "version" : "6.3.5",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
@@ -25,6 +25,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "6.3.5", "notes": [
+			"new guard mode setting active|passive. Passive guards shoot only players attacking colonists"
+		] },
 		{ "version": "6.3.4", "notes": [
 			"fixed the config file not being included in the release"
 		] },

@@ -7,13 +7,18 @@ using ChatCommands;
 
 namespace AngryGuards {
 
+	public enum GuardMode {
+		Active,
+		Passive
+	};
+
 	[ModLoader.ModManager]
 	public static class AngryGuards
 	{
 		public const string NAMESPACE = "AngryGuards";
 		public const string PERMISSION_PREFIX = "mods.angryguards";
 
-		// weapon definition
+		// config definitions
 		public struct Weapon {
 			public int Damage, Reload, Range;
 
@@ -27,6 +32,8 @@ namespace AngryGuards {
 		public static Weapon Bow = new Weapon(45, 20, 5);
 		public static Weapon Crossbow = new Weapon(85, 25, 8);
 		public static Weapon MatchlockGun = new Weapon(500, 30, 12);
+
+		public static GuardMode ModeSetting = GuardMode.Active;
 
 		private const string CONFIG_FILE = "angryguards-config.json";
 		private static string ConfigFilePath {
@@ -47,9 +54,9 @@ namespace AngryGuards {
 			BlockJobManagerTracker.Register<AngryGuardCrossbowNightJob>("angryguards.guardcrossbownight");
 			BlockJobManagerTracker.Register<AngryGuardMatchlockGunDayJob>("angryguards.guardmatchlockgunday");
 			BlockJobManagerTracker.Register<AngryGuardMatchlockGunNightJob>("angryguards.guardmatchlockgunnight");
-			Log.Write("Angry Guards completed registering jobs");
 			CommandManager.RegisterCommand(new FriendlyCommand());
 			CommandManager.RegisterCommand(new GlobalFriendlyCommand());
+			Log.Write($"Angry Guards started with guard mode: {ModeSetting}");
 		}
 
 		// Load config
@@ -79,6 +86,14 @@ namespace AngryGuards {
 					MatchlockGun.Reload = weaponJson.GetAs<int>("reload");
 					MatchlockGun.Range = weaponJson.GetAs<int>("range");
 				}
+				string setting;
+				if (configJson.TryGetAs("guardmode", out setting)) {
+					if (setting.Equals("active")) {
+						ModeSetting = GuardMode.Active;
+					} else if (setting.Equals("passive")) {
+						ModeSetting = GuardMode.Passive;
+					}
+				}
 			} catch (Exception e) {
 				Log.Write($"Could not parse {CONFIG_FILE}: {e.Message}");
 			}
@@ -98,6 +113,21 @@ namespace AngryGuards {
 		public static void OnQuit()
 		{
 			PlayerTracker.Save();
+		}
+
+		// track NPC hits/kills for passive mode
+		[ModLoader.ModCallback(ModLoader.EModCallbackType.OnNPCHit, NAMESPACE + ".OnNPCHit")]
+		public static void OnNPCHit(NPC.NPCBase npc, ModLoader.OnHitData data)
+		{
+			if (!(data.HitSourceObject is Players.Player)) {
+				return;
+			}
+			Players.Player killer = (Players.Player)data.HitSourceObject;
+			if (killer == npc.Colony.Owner || PlayerTracker.IsFriendly(npc.Colony.Owner, killer)) {
+				return;
+			}
+
+			PlayerTracker.AddEnemy(npc.Colony.Owner, killer);
 		}
 
 	} // class

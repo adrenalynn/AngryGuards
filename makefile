@@ -8,15 +8,14 @@ builddir = "adrenalynn/$(modname)"
 gamedir = /local/games/Steam/steamapps/common/Colony\ Survival
 
 $(dllname): src/*.cs
-	mcs /target:library -r:$(gamedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(gamedir)/gamedata/mods/Pipliz/APIProvider/APIProvider.dll,$(gamedir)/gamedata/mods/Pipliz/BaseGame/BaseGame.dll,$(basedir)/colonyserver_Data/Managed/UnityEngine.dll -out:"$(dllname)" -sdk:2 src/*.cs src/Research/*.cs
+	mcs /target:library -r:$(gamedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(gamedir)/gamedata/mods/Pipliz/APIProvider/APIProvider.dll,$(gamedir)/gamedata/mods/Pipliz/BaseGame/BaseGame.dll,$(gamedir)/colonyserver_Data/Managed/UnityEngine.dll -out:"$(dllname)" -sdk:2 src/*.cs src/Research/*.cs
 
 $(zipname): $(dllname)
-	rm $(zipname)
+	rm -f $(zipname)
 	mkdir -p $(builddir)
-	cp modInfo.json LICENSE README.md $(dllname) $(zip_files_extra) $(builddir)/
+	cp -r modInfo.json LICENSE README.md $(dllname) $(zip_files_extra) $(builddir)/
 	zip -r $(zipname) $(builddir)
-	rm -r $(builddir)/*
-	rmdir -p $(builddir)
+	rm -rf $(builddir)
 
 .PHONY: build default clean all zip install serverlog clientlog
 build: $(dllname)
@@ -28,11 +27,11 @@ default: build
 all: checkjson build zip
 
 clean:
-	-rm $(dllname) $(zipname)
-	-rm -r $(builddir)
+	rm -f $(dllname) $(zipname)
+	rm -rf $(builddir)
 
 install: build zip
-	-rm -r $(gamedir)/gamedata/mods/$(builddir)
+	rm -rf $(gamedir)/gamedata/mods/$(builddir)
 	unzip $(zipname) -d $(gamedir)/gamedata/mods
 
 checkjson:
