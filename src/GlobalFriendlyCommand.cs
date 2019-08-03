@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
-using Pipliz.Chatting;
-using ChatCommands;
-using Permissions;
+using System.Collections.Generic;
+using Chatting;
+using Chatting.Commands;
 
 namespace AngryGuards
 {
@@ -9,19 +9,17 @@ namespace AngryGuards
 	public class GlobalFriendlyCommand : IChatCommand
 	{
 
-		public bool IsCommand(string chat)
-		{
-			return (chat.Equals("/globalfriendly") || chat.StartsWith("/globalfriendly "));
-		}
-
 		public bool SyntaxError(Players.Player causedBy)
 		{
 			Chat.Send(causedBy, "Syntax: /globalfriendly {add|list|remove} {playername}");
 			return true;
 		}
 
-		public bool TryDoCommand(Players.Player causedBy, string chattext)
+		public bool TryDoCommand(Players.Player causedBy, string chattext, List<string> splits)
 		{
+			if (!splits[0].Equals("/globalfriendly")) {
+				return false;
+			}
 			if (!PermissionsManager.CheckAndWarnPermission(causedBy, AngryGuards.PERMISSION_PREFIX + ".global"))  {
 				return true;
 			}

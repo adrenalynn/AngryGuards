@@ -2,11 +2,11 @@
   {
     "name" : "angryguards",
     "namepretty" : "Angry Guards",
-    "version" : "6.3.5",
+    "version" : "0.7.1",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
-      "0.6.3"
+      "0.7.0"
     ],
     "jsonFiles" : [
       { "fileType" : "addOrOverrideTextureMappingEntries",
@@ -22,9 +22,15 @@
 	    "relativePath": "recipes_crafter.json",
 		"npcType": "pipliz.crafter",
 		"limitsUIMapping": [ "workbench" ]
+	  },
+	  { "fileType": "addScience",
+		"relativePath": "science.json"
 	  }
     ],
 	"patchnotes": [
+		{ "version": "0.7.1", "notes": [
+			"updated to base game version 0.7"
+		] },
 		{ "version": "6.3.5", "notes": [
 			"new guard mode setting active|passive. Passive guards shoot only players attacking colonists"
 		] },

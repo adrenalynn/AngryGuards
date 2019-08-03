@@ -2,8 +2,8 @@ using System;
 using System.IO;
 using Pipliz;
 using Pipliz.JSON;
-using Pipliz.Mods.APIProvider.Jobs;
-using ChatCommands;
+using Jobs;
+using Chatting;
 
 namespace AngryGuards {
 
@@ -46,16 +46,74 @@ namespace AngryGuards {
 
 		// initialize blocks and jobs
 		[ModLoader.ModCallback(ModLoader.EModCallbackType.AfterItemTypesDefined, NAMESPACE + ".RegisterJobs")]
-		[ModLoader.ModCallbackProvidesFor("pipliz.apiprovider.jobs.resolvetypes")]
+		[ModLoader.ModCallbackDependsOn("create_servermanager_trackers")]
+		[ModLoader.ModCallbackDependsOn("pipliz.server.loadnpctypes")]
+		[ModLoader.ModCallbackProvidesFor("create_savemanager")]
 		public static void AfterItemTypesDefined()
 		{
 			LoadConfig();
-			BlockJobManagerTracker.Register<AngryGuardBowDayJob>("angryguards.guardbowday");
-			BlockJobManagerTracker.Register<AngryGuardBowNightJob>("angryguards.guardbownight");
-			BlockJobManagerTracker.Register<AngryGuardCrossbowDayJob>("angryguards.guardcrossbowday");
-			BlockJobManagerTracker.Register<AngryGuardCrossbowNightJob>("angryguards.guardcrossbownight");
-			BlockJobManagerTracker.Register<AngryGuardMatchlockGunDayJob>("angryguards.guardmatchlockgunday");
-			BlockJobManagerTracker.Register<AngryGuardMatchlockGunNightJob>("angryguards.guardmatchlockgunnight");
+
+			// Bow Guard
+			AngryGuardJobSettings BowGuardDay = new AngryGuardJobSettings(
+				"angryguards.guardbowday", "pipliz.guardbowday",
+				AngryGuardJobSettings.EGuardSleepType.Night,
+				Bow.Damage, Bow.Range, Bow.Reload, "bowShoot",
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bronzearrow),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bow)
+			);
+			AngryGuardJobSettings BowGuardNight = new AngryGuardJobSettings(
+				"angryguards.guardbownight", "pipliz.guardbownight",
+				AngryGuardJobSettings.EGuardSleepType.Day,
+				Bow.Damage, Bow.Range, Bow.Reload, "bowShoot",
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bronzearrow),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bow)
+			);
+
+			// Crossbow Guard
+			AngryGuardJobSettings CrossbowGuardDay = new AngryGuardJobSettings(
+				"angryguards.guardcrossbowday", "pipliz.guardcrossbowday",
+				AngryGuardJobSettings.EGuardSleepType.Night,
+				Crossbow.Damage, Crossbow.Range, Crossbow.Reload, "bowShoot",
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.crossbowbolt),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.crossbow)
+			);
+			AngryGuardJobSettings CrossbowGuardNight = new AngryGuardJobSettings(
+				"angryguards.guardcrossbownight", "pipliz.guardcrossbownight",
+				AngryGuardJobSettings.EGuardSleepType.Day,
+				Crossbow.Damage, Crossbow.Range, Crossbow.Reload, "bowShoot",
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.crossbowbolt),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.crossbow)
+			);
+
+			// Matchlock Gun Guard
+			AngryGuardJobSettings MatchlockGunGuardDay = new AngryGuardJobSettings(
+				"angryguards.guardmatchlockgunday", "pipliz.guardmatchlockday",
+				AngryGuardJobSettings.EGuardSleepType.Night,
+				MatchlockGun.Damage, MatchlockGun.Range, MatchlockGun.Reload, "matchlock",
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.leadbullet),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.matchlockgun)
+			);
+			MatchlockGunGuardDay.ShootItem.Add(new InventoryItem(BlockTypes.BuiltinBlocks.Indices.gunpowderpouch));
+			MatchlockGunGuardDay.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.Indices.linenpouch, 1, 0.9f);
+
+			AngryGuardJobSettings MatchlockGunGuardNight = new AngryGuardJobSettings(
+				"angryguards.guardmatchlockgunnight", "pipliz.guardmatchlocknight",
+				AngryGuardJobSettings.EGuardSleepType.Day,
+				MatchlockGun.Damage, MatchlockGun.Range, MatchlockGun.Reload, "matchlock",
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.leadbullet),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.matchlockgun)
+			);
+			MatchlockGunGuardNight.ShootItem.Add(new InventoryItem(BlockTypes.BuiltinBlocks.Indices.gunpowderpouch));
+			MatchlockGunGuardNight.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.Indices.linenpouch, 1, 0.9f);
+
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(BowGuardDay));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(BowGuardNight));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(CrossbowGuardDay));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(CrossbowGuardNight));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(MatchlockGunGuardDay));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(MatchlockGunGuardNight));
+
+
 			CommandManager.RegisterCommand(new FriendlyCommand());
 			CommandManager.RegisterCommand(new GlobalFriendlyCommand());
 			Log.Write($"Angry Guards started with guard mode: {ModeSetting}");
@@ -127,11 +185,13 @@ namespace AngryGuards {
 				return;
 			}
 			Players.Player killer = (Players.Player)data.HitSourceObject;
-			if (killer == npc.Colony.Owner || PlayerTracker.IsFriendly(npc.Colony.Owner, killer)) {
-				return;
+			foreach (Players.Player owner in npc.Colony.Owners) {
+				if (owner == killer || PlayerTracker.IsFriendly(owner, killer)) {
+					return;
+				}
 			}
 
-			PlayerTracker.AddEnemy(npc.Colony.Owner, killer);
+			PlayerTracker.AddEnemy(npc.Colony, killer);
 		}
 
 	} // class

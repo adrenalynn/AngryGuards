@@ -1,0 +1,51 @@
+[
+	{
+		"icon": "gamedata/mods/adrenalynn/AngryGuards/icons/angryguardbow.png",
+		"key": "angryguards.research.angryguardbow",
+		"iterationCount": 10,
+		"iterationRequirements" : [
+			{ "type": "bronzearrow", "amount": 3 }
+		],
+		"dependencies": [
+			"pipliz.baseresearch.archery"
+		],
+		"unlocksRecipes": [
+			"angryguards.crafter.guardbowday",
+			"angryguards.crafter.guardbownight"
+		]
+	},
+	{
+		"icon": "gamedata/mods/adrenalynn/AngryGuards/icons/angryguardcrossbow.png",
+		"key": "angryguards.research.angryguardcrossbow",
+		"iterationCount": 10,
+		"iterationRequirements" : [
+			{ "type": "crossbowbolt", "amount": 3 },
+			{ "type": "crossbow" }
+		],
+		"dependencies": [
+			"pipliz.baseresearch.crossbow",
+			"angryguards.research.angryguardbow"
+		],
+		"unlocksRecipes": [
+			"angryguards.crafter.guardcrossbowday",
+			"angryguards.crafter.guardcrossbownight"
+		]
+	},
+	{
+		"icon": "gamedata/mods/adrenalynn/AngryGuards/icons/angryguardmatchlockgun.png",
+		"key": "angryguards.research.angryguardmatchlockgun",
+		"iterationCount": 10,
+		"iterationRequirements" : [
+			{ "type": "leadbullet", "amount": 5 },
+			{ "type": "matchlockgun" }
+		],
+		"dependencies": [
+			"pipliz.baseresearch.matchlockgun",
+			"angryguards.research.angryguardcrossbow"
+		],
+		"unlocksRecipes": [
+			"angryguards.crafter.guardmatchlockgunday",
+			"angryguards.crafter.guardmatchlockgunnight"
+		]
+	}
+]

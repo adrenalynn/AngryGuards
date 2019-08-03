@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
-using Pipliz.Chatting;
-using ChatCommands;
+using System.Collections.Generic;
+using Chatting;
 
 namespace AngryGuards
 {
@@ -8,19 +8,18 @@ namespace AngryGuards
 	public class FriendlyCommand : IChatCommand
 	{
 
-		public bool IsCommand(string chat)
-		{
-			return (chat.Equals("/friendly") || chat.StartsWith("/friendly "));
-		}
-
 		public bool SyntaxError(Players.Player causedBy)
 		{
 			Chat.Send(causedBy, "Syntax: /friendly {add|list|remove} {playername}");
 			return true;
 		}
 
-		public bool TryDoCommand(Players.Player causedBy, string chattext)
+		public bool TryDoCommand(Players.Player causedBy, string chattext, List<string> splits)
 		{
+			if (!splits[0].Equals("/friendly")) {
+				return false;
+			}
+
 			var m = Regex.Match(chattext, @"/friendly (?<action>[^ ]+) ?(?<player>[^ ]+)?$");
 			if (!m.Success) {
 				return SyntaxError(causedBy);

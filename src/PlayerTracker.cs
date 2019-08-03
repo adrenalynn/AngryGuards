@@ -17,9 +17,9 @@ namespace AngryGuards {
 		// global friendly list (admin, staff, ...)
 		private static List<Players.Player> globalFriendly = new List<Players.Player>();
 
-		// enemy list per player (for passive guards)
-		private static Dictionary<Players.Player, List<Players.Player>> enemyPlayers =
-			new Dictionary<Players.Player, List<Players.Player>>();
+		// enemy list per colony (for passive guards)
+		private static Dictionary<Colony, List<Players.Player>> colonyEnemies =
+			new Dictionary<Colony, List<Players.Player>>();
 
 		private const string CONFIG_FILE = "angryguards-friendly.json";
 		private static string ConfigFilePath {
@@ -29,39 +29,34 @@ namespace AngryGuards {
 		}
 
 		// find non friendly targets within given range
-		public static Players.Player FindTarget(Players.Player owner, Vector3 position, int range)
+		public static Players.Player FindTarget(Colony owner, Vector3 position, int range)
 		{
 			Players.Player target = null;
 			float shortestDistance = range + 1.0f;
 
-			List<Players.Player> ownerFriends;
-			if (friendlyPlayers.ContainsKey(owner)) {
-				ownerFriends = friendlyPlayers[owner];
-			} else {
-				ownerFriends = new List<Players.Player>();
-			}
-
-			List<Players.Player> ownerEnemies;
-			if (enemyPlayers.ContainsKey(owner)) {
-				ownerEnemies = enemyPlayers[owner];
-			} else {
-				ownerEnemies = new List<Players.Player>();
+			List<Players.Player> friendlies = new List<Players.Player>();
+			foreach (Players.Player ownerPlayer in owner.Owners) {
+				if (friendlyPlayers.ContainsKey(ownerPlayer)) {
+					friendlies.AddRange(friendlyPlayers[ownerPlayer]);
+				}
 			}
 
 			for (int i = 0; i < Players.CountConnected; i++) {
 				Players.Player candidate = Players.GetConnectedByIndex(i);
-				if (candidate == owner || ownerFriends.Contains(candidate) || globalFriendly.Contains(candidate)) {
+				if (friendlies.Contains(candidate) || globalFriendly.Contains(candidate)) {
 					continue;
 				}
 
-				if (AngryGuards.ModeSetting == GuardMode.Passive && !ownerEnemies.Contains(candidate)) {
-					continue;
+				if (AngryGuards.ModeSetting == GuardMode.Passive) {
+					if (!colonyEnemies.ContainsKey(owner) || !colonyEnemies[owner].Contains(candidate)) {
+						continue;
+					}
 				}
 
 				Vector3 candidateEyePosition = candidate.Position;
 				candidateEyePosition[1] += 1;
 				float distance = Vector3.Distance(position, candidate.Position);
-				if (distance < shortestDistance && (General.Physics.Physics.CanSee(position, candidate.Position) || General.Physics.Physics.CanSee(position, candidateEyePosition))) {
+				if (distance < shortestDistance && (VoxelPhysics.CanSee(position, candidate.Position) || VoxelPhysics.CanSee(position, candidateEyePosition))) {
 					shortestDistance = distance;
 					target = candidate;
 				}
@@ -102,14 +97,14 @@ namespace AngryGuards {
 		}
 
 		// add a player to the enemy list (for passive mode)
-		public static bool AddEnemy(Players.Player owner, Players.Player target)
+		public static bool AddEnemy(Colony owner, Players.Player target)
 		{
 			List<Players.Player> enemies;
-			if (!enemyPlayers.ContainsKey(owner)) {
+			if (!colonyEnemies.ContainsKey(owner)) {
 				enemies = new List<Players.Player>();
-				enemyPlayers[owner] = enemies;
+				colonyEnemies[owner] = enemies;
 			} else {
-				enemies = enemyPlayers[owner];
+				enemies = colonyEnemies[owner];
 			}
 			if (enemies.Contains(target)) {
 				return false;
