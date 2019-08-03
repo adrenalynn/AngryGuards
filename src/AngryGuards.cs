@@ -7,6 +7,8 @@ using ChatCommands;
 
 namespace AngryGuards {
 
+	// Active: guards shoot all players (unless friendly)
+	// Passive: guards shoot players only after they attack colonists
 	public enum GuardMode {
 		Active,
 		Passive
@@ -88,10 +90,12 @@ namespace AngryGuards {
 				}
 				string setting;
 				if (configJson.TryGetAs("guardmode", out setting)) {
-					if (setting.Equals("active")) {
+					if (setting.Equals("active") || setting.Equals("Active")) {
 						ModeSetting = GuardMode.Active;
-					} else if (setting.Equals("passive")) {
+					} else if (setting.Equals("passive") || setting.Equals("Passive")) {
 						ModeSetting = GuardMode.Passive;
+					} else {
+						Log.Write($"ERROR: invalid guardmode setting '{setting}'. Using defaults");
 					}
 				}
 			} catch (Exception e) {
