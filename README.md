@@ -10,7 +10,7 @@ To add, list or remove friendly players that your guards will not shoot at. This
 ## Settings
 To adjust the damage settings copy the file **angryguards-config.json** into your world savegame folder. Damage, range and reload speed can be adjusted.
 
-To avoid admins getting shot at add permission **mods.angryguards.peacekeeper** to your admin group.
+Use permission **mods.angryguards.peacekeeper** for any user/group that should never be shot at.
 
 ## License
 The mod itself is licensed under the <a href="LICENSE">MIT License</a>.
