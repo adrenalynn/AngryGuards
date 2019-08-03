@@ -16,17 +16,21 @@
 		"angryguards.guardmatchlockgunnight" : "Armed and extremly dangerous"
 	},
 	"sentences": {
-		"angryguards.research.angryguardbow": {
-			"name" : "Angry Bow Guard",
-			"description" : "Unlocks angry guards with bows. They shoot players, not zombies."
-		},
-		"angryguards.research.angryguardcrossbow": {
-			"name" : "Angry Crossbow Guard",
-			"description" : "Unlocks angry guards with crossbows. When you really want to get them."
-		},
-		"angryguards.research.angryguardmatchlockgun": {
-			"name" : "Angry Matchlock Gun Guard",
-			"description" : "Unlocks angry guards with matchlock guns. For a really rainy day - for them, not you."
+		"angryguards" : {
+			"research": {
+				"angryguardbow": {
+					"name" : "Angry Bow Guard",
+					"description" : "Unlocks angry guards with bows. They shoot players, not zombies."
+				},
+				"angryguardcrossbow": {
+					"name" : "Angry Crossbow Guard",
+					"description" : "Unlocks angry guards with crossbows. When you really want to get them."
+				},
+				"angryguardmatchlockgun": {
+					"name" : "Angry Matchlock Gun Guard",
+					"description" : "Unlocks angry guards with matchlock guns. For a really rainy day - for them, not you."
+				}
+			}
 		}
 	}
 }
