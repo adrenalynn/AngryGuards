@@ -115,7 +115,6 @@ namespace AngryGuards {
 
 
 			CommandManager.RegisterCommand(new FriendlyCommand());
-			CommandManager.RegisterCommand(new GlobalFriendlyCommand());
 			Log.Write($"Angry Guards started with guard mode: {ModeSetting}");
 		}
 

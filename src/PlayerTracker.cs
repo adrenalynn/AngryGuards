@@ -14,9 +14,6 @@ namespace AngryGuards {
 		private static Dictionary<Players.Player, List<Players.Player>> friendlyPlayers =
 			new Dictionary<Players.Player, List<Players.Player>>();
 
-		// global friendly list (admin, staff, ...)
-		private static List<Players.Player> globalFriendly = new List<Players.Player>();
-
 		// enemy list per colony (for passive guards)
 		private static Dictionary<Colony, List<Players.Player>> colonyEnemies =
 			new Dictionary<Colony, List<Players.Player>>();
@@ -39,11 +36,15 @@ namespace AngryGuards {
 				if (friendlyPlayers.ContainsKey(ownerPlayer)) {
 					friendlies.AddRange(friendlyPlayers[ownerPlayer]);
 				}
+				friendlies.Add(ownerPlayer);
 			}
 
 			for (int i = 0; i < Players.CountConnected; i++) {
 				Players.Player candidate = Players.GetConnectedByIndex(i);
-				if (friendlies.Contains(candidate) || globalFriendly.Contains(candidate)) {
+				if (friendlies.Contains(candidate)) {
+					continue;
+				}
+				if (PermissionsManager.HasPermission(candidate, AngryGuards.PERMISSION_PREFIX + ".peacekeeper")) {
 					continue;
 				}
 
@@ -129,13 +130,6 @@ namespace AngryGuards {
 			return true;
 		}
 
-		// global friendly list as csv
-		public static bool GetGlobalFriendlyList(out string names)
-		{
-			names = string.Join(", ", globalFriendly.Select(x => x.Name).ToArray());
-			return true;
-		}
-
 		// check if friendly for a player
 		public static bool IsFriendly(Players.Player owner, Players.Player candidate)
 		{
@@ -145,32 +139,7 @@ namespace AngryGuards {
 					return true;
 				}
 			}
-			if (globalFriendly.Contains(candidate)) {
-				return true;
-			}
 			return false;
-		}
-
-		// add global friendly
-		public static bool AddGlobalFriendly(Players.Player target)
-		{
-			if (globalFriendly.Contains(target)) {
-				return false;
-			}
-			globalFriendly.Add(target);
-			Save();			
-			return true;
-		}
-
-		// remove global friendly
-		public static bool RemoveGlobalFriendly(Players.Player target)
-		{
-			if (!globalFriendly.Contains(target)) {
-				return false;
-			}
-			globalFriendly.Remove(target);
-			Save();			
-			return true;
 		}
 
 		// Save config to JSON file
@@ -178,14 +147,6 @@ namespace AngryGuards {
 		{
 			Log.Write($"Saving {CONFIG_FILE}");
 			JSONNode configJson = new JSONNode();
-
-			JSONNode globalJson = new JSONNode(NodeType.Array);
-			foreach (Players.Player target in globalFriendly) {
-				JSONNode recordJson = new JSONNode();
-				recordJson.SetAs(target.ID.steamID);
-				globalJson.AddToArray(recordJson);
-			}
-			configJson.SetAs("global", globalJson);
 
 			JSONNode playersJson = new JSONNode(NodeType.Array);
 			foreach (KeyValuePair<Players.Player, List<Players.Player>> kvp in friendlyPlayers) {
@@ -222,16 +183,6 @@ namespace AngryGuards {
 
 			Log.Write($"Loading friendly list from {CONFIG_FILE}");
 			try {
-				JSONNode globalJson;
-				configJson.TryGetAs("global", out globalJson);
-				foreach (JSONNode record in globalJson.LoopArray()) {
-					Players.Player target;
-					string error;
-					if (PlayerHelper.TryGetPlayer(record.GetAs<string>(), out target, out error, true)) {
-						globalFriendly.Add(target);
-					}
-				}
-
 				JSONNode playersJson;
 				configJson.TryGetAs("players", out playersJson);
 				foreach (JSONNode record in playersJson.LoopArray()) {
