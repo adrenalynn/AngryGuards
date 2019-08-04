@@ -38,8 +38,8 @@ checkjson:
 	find . -type f -name "*.json" | while read f; do echo $$f; json_pp <$$f >/dev/null; done
 
 serverlog:
-	less ../../../logs/server/$$(ls -1rt ../../../logs/server | tail -1)
+	less $(gamedir)/logs/server/$$(ls -1rt $(gamedir)/logs/server | tail -1)
 
 clientlog:
-	less ../../../logs/client/$$(ls -1rt ../../../logs/client | tail -1)
+	less $(gamedir)/logs/client/$$(ls -1rt $(gamedir)/logs/client | tail -1)
 
