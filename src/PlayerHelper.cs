@@ -3,7 +3,7 @@ using System.IO;
 using Pipliz;
 using System.Text.RegularExpressions;
 
-namespace ColonyCommands
+namespace AngryGuards
 {
 
 	public static class PlayerHelper
