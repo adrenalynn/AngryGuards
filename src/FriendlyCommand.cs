@@ -20,7 +20,7 @@ namespace AngryGuards
 				return false;
 			}
 
-			var m = Regex.Match(chattext, @"/friendly (?<action>[^ ]+) ?(?<player>[^ ]+)?$");
+			var m = Regex.Match(chattext, @"/friendly (?<action>[^ ]+) ?(?<player>['].+[']|[^ ]+)?$");
 			if (!m.Success) {
 				return SyntaxError(causedBy);
 			}
