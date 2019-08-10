@@ -2,7 +2,7 @@
   {
     "name" : "angryguards",
     "namepretty" : "Angry Guards",
-    "version" : "0.7.1",
+    "version" : "0.7.2",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
@@ -29,6 +29,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "0.7.2", "notes": [
+			"fixed /friendly player name parsing"
+		] },
 		{ "version": "0.7.1", "notes": [
 			"updated to base game version 0.7"
 		] },
