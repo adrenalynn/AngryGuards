@@ -2,7 +2,7 @@
   {
     "name" : "angryguards",
     "namepretty" : "Angry Guards",
-    "version" : "0.7.2",
+    "version" : "0.7.3",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
@@ -29,6 +29,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "0.7.3", "notes": [
+			"config option ShootMountedPlayers (default no)"
+		] },
 		{ "version": "0.7.2", "notes": [
 			"fixed /friendly player name parsing"
 		] },

@@ -5,6 +5,7 @@ using UnityEngine;
 using System.Linq;
 using Pipliz.JSON;
 using Pipliz;
+using MeshedObjects;
 
 namespace AngryGuards {
 
@@ -49,6 +50,13 @@ namespace AngryGuards {
 				}
 
 				if (AngryGuards.ModeSetting == GuardMode.Passive) {
+					if (!colonyEnemies.ContainsKey(owner) || !colonyEnemies[owner].Contains(candidate)) {
+						continue;
+					}
+				}
+
+				// avoid shooting players on gliders. but still shoot them when they kill NPCs
+				if (!AngryGuards.ShootMountedPlayers && MeshedObjectManager.HasVehicle(candidate)) {
 					if (!colonyEnemies.ContainsKey(owner) || !colonyEnemies[owner].Contains(candidate)) {
 						continue;
 					}

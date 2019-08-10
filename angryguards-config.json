@@ -1,5 +1,6 @@
 {
 	"guardmode" : "active",
+	"shootMountedPlayers" : "false",
 	"bow": {
 		"damage": 45,
 		"range": 20,

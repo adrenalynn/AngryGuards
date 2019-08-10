@@ -36,6 +36,7 @@ namespace AngryGuards {
 		public static Weapon MatchlockGun = new Weapon(500, 30, 12);
 
 		public static GuardMode ModeSetting = GuardMode.Active;
+		public static bool ShootMountedPlayers = false;
 
 		private const string CONFIG_FILE = "angryguards-config.json";
 		private static string ConfigFilePath {
@@ -154,6 +155,10 @@ namespace AngryGuards {
 					} else {
 						Log.Write($"ERROR: invalid guardmode setting '{setting}'. Using defaults");
 					}
+				}
+				bool shootSetting;
+				if (configJson.TryGetAs("shootMountedPlayers", out shootSetting)) {
+						ShootMountedPlayers = shootSetting;
 				}
 			} catch (Exception e) {
 				Log.Write($"Could not parse {CONFIG_FILE}: {e.Message}");
