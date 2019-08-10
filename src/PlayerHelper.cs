@@ -3,7 +3,7 @@ using System.IO;
 using Pipliz;
 using System.Text.RegularExpressions;
 
-namespace AngryGuards
+namespace ColonyCommands
 {
 
 	public static class PlayerHelper
@@ -99,7 +99,7 @@ namespace AngryGuards
 			} else if (closestMatch != null && (closestDist < closestMatch.Name.Length * 0.2)) {
 				error = "";
 				targetPlayer = closestMatch;
-				Log.Write ($"Name '{identifier}' did not match, picked closest match '{targetPlayer.Name}' instead");
+				Log.Write($"Name '{identifier}' did not match, picked closest match '{targetPlayer.Name}' instead");
 				return true;
 			}
 			error = "player not found";
@@ -128,7 +128,7 @@ namespace AngryGuards
 			for (var i = 1; i <= n; i++) {
 				for (var j = 1; j <= m; j++) {
 					var cost = (t[j - 1] == s[i - 1]) ? 0 : 1;
-					d[i, j] = System.Math.Min (
+					d[i, j] = System.Math.Min(
 							System.Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
 							d[i - 1, j - 1] + cost);
 				}
@@ -136,6 +136,5 @@ namespace AngryGuards
 			return d[n, m];
 		}
 	}
-
-} // namespace
+}
 
