@@ -141,11 +141,8 @@ namespace AngryGuards {
 		// check if friendly for a player
 		public static bool IsFriendly(Players.Player owner, Players.Player candidate)
 		{
-			if (friendlyPlayers.ContainsKey(owner)) {
-				List<Players.Player> ownerFriends = friendlyPlayers[owner];
-				if (ownerFriends.Contains(candidate)) {
-					return true;
-				}
+			if (friendlyPlayers.ContainsKey(owner) && friendlyPlayers[owner].Contains(candidate)) {
+				return true;
 			}
 			return false;
 		}

@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Pipliz;
 using Pipliz.JSON;
+using BlockEntities.Implementations;
 using Jobs;
 using Chatting;
 
@@ -37,6 +38,7 @@ namespace AngryGuards {
 
 		public static GuardMode ModeSetting = GuardMode.Active;
 		public static bool ShootMountedPlayers = false;
+		public static int PassiveProtectionRange = 100;
 
 		private const string CONFIG_FILE = "angryguards-config.json";
 		private static string ConfigFilePath {
@@ -156,6 +158,12 @@ namespace AngryGuards {
 						Log.Write($"ERROR: invalid guardmode setting '{setting}'. Using defaults");
 					}
 				}
+
+				int rangeSetting;
+				if (configJson.TryGetAs("passiveProtectionRange", out rangeSetting)) {
+					PassiveProtectionRange = rangeSetting;
+				}
+
 				bool shootSetting;
 				if (configJson.TryGetAs("shootMountedPlayers", out shootSetting)) {
 						ShootMountedPlayers = shootSetting;
@@ -196,6 +204,48 @@ namespace AngryGuards {
 			}
 
 			PlayerTracker.AddEnemy(npc.Colony, killer);
+		}
+
+		// track block changes within banner range for passive mode
+		[ModLoader.ModCallback(ModLoader.EModCallbackType.OnTryChangeBlock, NAMESPACE + ".OnTryChangeBlock")]
+		public static void OnTryChangeBlock(ModLoader.OnTryChangeBlockData userData)
+		{
+			Players.Player causedBy = null;
+			if (userData.RequestOrigin.Type == BlockChangeRequestOrigin.EType.Player) {
+				causedBy = userData.RequestOrigin.AsPlayer;
+			}
+			if (causedBy == null || AngryGuards.ModeSetting != GuardMode.Passive || PermissionsManager.HasPermission(causedBy, AngryGuards.PERMISSION_PREFIX + ".peacekeeper")) {
+				return;
+			}
+
+			// check if the block change is within range of a banner(colony)
+			foreach (Colony checkColony in ServerManager.ColonyTracker.ColoniesByID.Values) {
+				if (IsOwnerOrFriendly(checkColony, causedBy)) {
+					continue;
+				}
+				foreach (BannerTracker.Banner checkBanner in checkColony.Banners) {
+					int distanceX = (int)System.Math.Abs(causedBy.Position.x - checkBanner.Position.x);
+					int distanceZ = (int)System.Math.Abs(causedBy.Position.z - checkBanner.Position.z);
+					if (distanceX < PassiveProtectionRange && distanceZ < PassiveProtectionRange) {
+						PlayerTracker.AddEnemy(checkColony, causedBy);
+						return;
+					}
+				}
+			}
+			return;
+		}
+
+		public static bool IsOwnerOrFriendly(Colony colony, Players.Player candidate)
+		{
+			if (colony.Owners.ContainsByReference(candidate)) {
+				return true;
+			}
+			foreach (Players.Player owner in colony.Owners) {
+				if (PlayerTracker.IsFriendly(owner, candidate)) {
+					return true;
+				}
+			}
+			return false;
 		}
 
 	} // class

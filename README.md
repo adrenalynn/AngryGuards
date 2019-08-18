@@ -14,7 +14,10 @@ Use permission **mods.angryguards.peacekeeper** for any user/group that should n
 
 **shootMountedPlayers** defaults to false, players mounted on a glider will not be shot at.
 
-**guardMode** Regular mode is active, guards shoot players as soon as they come into range. Change it to **passive** will make guards only shoot players when they do hit and/or kill NPCs.
+## Passive mode
+Regular guard mode is active, shooting all players that come in range.
+You can change to **guardMode=passive** in the config file, in passive mode the guards will not shoot players on sight. Only if the target attacks NPCs or tries to change(place/delete blocks) they will start shooting.
+**passiveProtectionRange** defines in what range block changes are tracked (distance from banner)
 
 ## License
 The mod itself is licensed under the <a href="LICENSE">MIT License</a>.

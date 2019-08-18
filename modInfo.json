@@ -2,7 +2,7 @@
   {
     "name" : "angryguards",
     "namepretty" : "Angry Guards",
-    "version" : "0.7.3",
+    "version" : "0.7.4",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
@@ -29,6 +29,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "0.7.4", "notes": [
+			"passive mode now tracks block changes also, not only NPC hits"
+		] },
 		{ "version": "0.7.3", "notes": [
 			"config option ShootMountedPlayers (default no)"
 		] },
