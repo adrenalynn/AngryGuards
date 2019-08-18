@@ -12,6 +12,10 @@ To adjust the damage settings copy the file **angryguards-config.json** into you
 
 Use permission **mods.angryguards.peacekeeper** for any user/group that should never be shot at.
 
+**shootMountedPlayers** defaults to false, players mounted on a glider will not be shot at.
+
+**guardMode** Regular mode is active, guards shoot players as soon as they come into range. Change it to **passive** will make guards only shoot players when they do hit and/or kill NPCs.
+
 ## License
 The mod itself is licensed under the <a href="LICENSE">MIT License</a>.
 
