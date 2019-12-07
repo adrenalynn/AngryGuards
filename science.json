@@ -1,6 +1,6 @@
 [
 	{
-		"icon": "gamedata/mods/adrenalynn/AngryGuards/icons/angryguardbow.png",
+		"icon": "./icons/angryguardbow.png",
 		"key": "angryguards.research.angryguardbow",
 		"iterationCount": 10,
 		"iterationRequirements" : [
@@ -15,7 +15,7 @@
 		]
 	},
 	{
-		"icon": "gamedata/mods/adrenalynn/AngryGuards/icons/angryguardcrossbow.png",
+		"icon": "./icons/angryguardcrossbow.png",
 		"key": "angryguards.research.angryguardcrossbow",
 		"iterationCount": 10,
 		"iterationRequirements" : [
@@ -32,7 +32,7 @@
 		]
 	},
 	{
-		"icon": "gamedata/mods/adrenalynn/AngryGuards/icons/angryguardmatchlockgun.png",
+		"icon": "./icons/angryguardmatchlockgun.png",
 		"key": "angryguards.research.angryguardmatchlockgun",
 		"iterationCount": 10,
 		"iterationRequirements" : [

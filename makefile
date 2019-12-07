@@ -8,7 +8,7 @@ builddir = adrenalynn/$(modname)
 gamedir = /local/games/Steam/steamapps/common/Colony\ Survival
 
 $(dllname): src/*.cs
-	mcs /target:library -nostdlib -r:$(gamedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(gamedir)/gamedata/mods/Pipliz/BaseGame/BaseGame.dll,$(gamedir)/colonyserver_Data/Managed/UnityEngine.CoreModule.dll,$(gamedir)/colonyserver_Data/Managed/mscorlib.dll,$(gamedir)/colonyserver_Data/Managed/System.dll,$(gamedir)/colonyserver_Data/Managed/System.Core.dll,$(gamedir)/colonyserver_Data/Managed/Steamworks.NET.dll -out:"$(dllname)" -sdk:4 -recurse:'src/*.cs'
+	mcs /target:library -nostdlib -r:$(gamedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(gamedir)/colonyserver_Data/Managed/UnityEngine.CoreModule.dll,$(gamedir)/colonyserver_Data/Managed/mscorlib.dll,$(gamedir)/colonyserver_Data/Managed/System.dll,$(gamedir)/colonyserver_Data/Managed/System.Core.dll,$(gamedir)/colonyserver_Data/Managed/Steamworks.NET.dll -out:"$(dllname)" -sdk:4 -recurse:'src/*.cs'
 
 $(zipname): $(dllname) $(zip_files_extra)
 	$(RM) $(zipname)
@@ -38,8 +38,8 @@ checkjson:
 	find . -type f -name "*.json" | while read f; do echo $$f; json_pp <$$f >/dev/null; done
 
 serverlog:
-	less $(gamedir)/logs/server/$$(ls -1rt $(gamedir)/logs/server | tail -1)
+	less $(gamedir)/gamedata/logs/server/$$(ls -1rt $(gamedir)/gamedata/logs/server | tail -1)
 
 clientlog:
-	less $(gamedir)/logs/client/$$(ls -1rt $(gamedir)/logs/client | tail -1)
+	less $(gamedir)/gamedata/logs/client/$$(ls -1rt $(gamedir)/gamedata/logs/client | tail -1)
 

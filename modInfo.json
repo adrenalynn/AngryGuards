@@ -1,12 +1,12 @@
 [
   {
-    "name" : "angryguards",
+    "name" : "AngryGuards",
     "namepretty" : "Angry Guards",
-    "version" : "0.7.4",
+    "version" : "0.7.5",
     "enabled" : true,
 	"dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
-      "0.7.0"
+      "0.7.0", "0.7.1"
     ],
     "jsonFiles" : [
       { "fileType" : "addOrOverrideTextureMappingEntries",
@@ -29,6 +29,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "0.7.5", "notes": [
+			"updated for CS 0.7.1 and workshop support"
+		] },
 		{ "version": "0.7.4", "notes": [
 			"passive mode now tracks block changes also, not only NPC hits"
 		] },
