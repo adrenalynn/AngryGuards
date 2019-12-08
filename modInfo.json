@@ -1,12 +1,12 @@
 [
   {
-    "name" : "AngryGuards",
-    "namepretty" : "Angry Guards",
+    "name" : "Angry Guards",
+    "description" : "Guards that target enemy players",
     "version" : "0.7.5",
-    "enabled" : true,
-	"dllpath" : "AngryGuards.dll",
+    "isoptional" : true,
+    "dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
-      "0.7.0", "0.7.1"
+	"0.7.1"
     ],
     "jsonFiles" : [
       { "fileType" : "addOrOverrideTextureMappingEntries",
