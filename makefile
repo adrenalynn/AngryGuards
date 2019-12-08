@@ -4,7 +4,7 @@ dllname = $(modname).dll
 version = $(shell cat modInfo.json | awk '/"version"/ {print $$3}' | head -1 | sed 's/[",]//g')
 zipname = $(modname)-$(version).zip
 zip_files_extra = types.json angryguards-config.json texturemapping.json recipes_crafter.json science.json icons localization textures meshes
-builddir = adrenalynn/$(modname)
+builddir = $(modname)
 gamedir = /local/games/Steam/steamapps/common/Colony\ Survival
 
 $(dllname): src/*.cs
