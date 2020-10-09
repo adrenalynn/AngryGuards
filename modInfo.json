@@ -2,8 +2,9 @@
   {
     "name" : "Angry Guards",
     "description" : "Guards that target enemy players",
-    "version" : "0.7.5",
-    "isoptional" : true,
+    "version" : "0.7.6",
+	"isoptional" : false,
+	"enableddefault" : true,
     "dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
 	"0.7.1"
@@ -29,6 +30,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "0.7.6", "notes": [
+			"updated for CS 0.7.5"
+		] },
 		{ "version": "0.7.5", "notes": [
 			"updated for CS 0.7.1 and workshop support"
 		] },

@@ -170,7 +170,7 @@ namespace AngryGuards {
 		}
 
 		// unused for guards
-		public void OnGoalChanged(BlockJobInstance blockInstance, NPCBase.NPCGoal goalOld, NPCBase.NPCGoal goalNew)
+		public void OnGoalChanged(BlockJobInstance blockInstance, INPCGoal goalOld, INPCGoal goalNew)
 		{
 		}
 
