@@ -2,12 +2,12 @@
   {
     "name" : "Angry Guards",
     "description" : "Guards that target enemy players",
-    "version" : "0.7.6",
-	"isoptional" : false,
+    "version" : "1.0.1",
+	"isoptional" : true,
 	"enableddefault" : true,
     "dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
-	"0.7.1"
+		"0.7.1","0.8.0"
     ],
     "jsonFiles" : [
       { "fileType" : "addOrOverrideTextureMappingEntries",
@@ -30,6 +30,10 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "1.0.1", "notes": [
+			"updated for CS 0.8.0",
+			"supports colonly wars from ColonyCommands mod to set guard mode active"
+		] },
 		{ "version": "0.7.6", "notes": [
 			"updated for CS 0.7.5"
 		] },

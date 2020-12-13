@@ -49,16 +49,24 @@ namespace AngryGuards {
 					continue;
 				}
 
-				if (AngryGuards.ModeSetting == GuardMode.Passive) {
-					if (!colonyEnemies.ContainsKey(owner) || !colonyEnemies[owner].Contains(candidate)) {
-						continue;
-					}
+				bool atWar = false;
+				if (AngryGuards.ColonyWarMode.Contains(owner)) {
+					atWar = true;
 				}
 
-				// avoid shooting players on gliders. but still shoot them when they kill NPCs
-				if (!AngryGuards.ShootMountedPlayers && MeshedObjectManager.HasVehicle(candidate)) {
-					if (!colonyEnemies.ContainsKey(owner) || !colonyEnemies[owner].Contains(candidate)) {
-						continue;
+				// colonies at war are always active mode and also shoot mounted players
+				if (!atWar) {
+					if (AngryGuards.ModeSetting == GuardMode.Passive) {
+						if (!colonyEnemies.ContainsKey(owner) || !colonyEnemies[owner].Contains(candidate)) {
+							continue;
+						}
+					}
+
+					// avoid shooting players on gliders. but still shoot them when they kill NPCs
+					if (!AngryGuards.ShootMountedPlayers && MeshedObjectManager.HasVehicle(candidate)) {
+						if (!colonyEnemies.ContainsKey(owner) || !colonyEnemies[owner].Contains(candidate)) {
+							continue;
+						}
 					}
 				}
 

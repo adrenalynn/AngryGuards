@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using Pipliz;
 using Pipliz.JSON;
 using BlockEntities.Implementations;
@@ -37,6 +38,7 @@ namespace AngryGuards {
 		public static Weapon MatchlockGun = new Weapon(500, 30, 12);
 
 		public static GuardMode ModeSetting = GuardMode.Active;
+		public static List<Colony> ColonyWarMode = new List<Colony>();
 		public static bool ShootMountedPlayers = false;
 		public static int PassiveProtectionRange = 100;
 
@@ -246,6 +248,22 @@ namespace AngryGuards {
 				}
 			}
 			return false;
+		}
+
+		// This method will be called by other mods to start colony wars. Used by the ColonyCommands mod
+		public static void ColonySetWarMode(Colony colony, bool mode)
+		{
+			if (mode == true) {
+				Log.Write($"AngryGuards: received war call for colony {colony.Name}");
+				if (!ColonyWarMode.Contains(colony)) {
+					ColonyWarMode.Add(colony);
+				}
+			} else {
+				Log.Write($"AngryGuards: received end of war for colony {colony.Name}");
+				if (ColonyWarMode.Contains(colony)) {
+					ColonyWarMode.Remove(colony);
+				}
+			}
 		}
 
 	} // class
