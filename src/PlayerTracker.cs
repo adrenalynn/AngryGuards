@@ -40,6 +40,11 @@ namespace AngryGuards {
 				friendlies.Add(ownerPlayer);
 			}
 
+			bool atWar = false;
+			if (AngryGuards.ColonyWarMode.Contains(owner)) {
+				atWar = true;
+			}
+
 			for (int i = 0; i < Players.CountConnected; i++) {
 				Players.Player candidate = Players.GetConnectedByIndex(i);
 				if (friendlies.Contains(candidate)) {
@@ -48,10 +53,8 @@ namespace AngryGuards {
 				if (PermissionsManager.HasPermission(candidate, AngryGuards.PERMISSION_PREFIX + ".peacekeeper")) {
 					continue;
 				}
-
-				bool atWar = false;
-				if (AngryGuards.ColonyWarMode.Contains(owner)) {
-					atWar = true;
+				if (candidate.Health <= 0.0f) {
+					continue;
 				}
 
 				// colonies at war are always active mode and also shoot mounted players

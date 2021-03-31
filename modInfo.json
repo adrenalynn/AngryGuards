@@ -2,7 +2,7 @@
   {
     "name" : "Angry Guards",
     "description" : "Guards that target enemy players",
-    "version" : "1.0.1",
+    "version" : "1.0.2",
 	"isoptional" : true,
 	"enableddefault" : true,
     "dllpath" : "AngryGuards.dll",
@@ -30,6 +30,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "1.0.2", "notes": [
+			"guards no longer shoot already dead players"
+		] },
 		{ "version": "1.0.1", "notes": [
 			"updated for CS 0.8.0",
 			"supports colonly wars from ColonyCommands mod to set guard mode active"
