@@ -174,6 +174,9 @@ namespace AngryGuards {
 		// Load config from JSON file
 		public static void Load()
 		{
+			if (!File.Exists(ConfigFilePath)) {
+				return;
+			}
 			Log.Write($"Loading friendly list from {CONFIG_FILE}");
 			try {
 				JsonSerializer json = new JsonSerializer();
