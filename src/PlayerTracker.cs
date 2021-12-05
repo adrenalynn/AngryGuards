@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using Pipliz.JSON;
+using Newtonsoft.Json;
+using UnityEngine;
 using Pipliz;
 using MeshedObjects;
 
@@ -33,11 +33,11 @@ namespace AngryGuards {
 			float shortestDistance = range + 1.0f;
 
 			List<Players.Player> friendlies = new List<Players.Player>();
-			foreach (Players.Player ownerPlayer in owner.Owners) {
-				if (friendlyPlayers.ContainsKey(ownerPlayer)) {
-					friendlies.AddRange(friendlyPlayers[ownerPlayer]);
+			for (int i = 0; i < owner.Owners.Count; ++i) {
+				if (friendlyPlayers.ContainsKey(owner.Owners[i])) {
+					friendlies.AddRange(friendlyPlayers[owner.Owners[i]]);
 				}
-				friendlies.Add(ownerPlayer);
+				friendlies.Add(owner.Owners[i]);
 			}
 
 			bool atWar = false;
@@ -45,8 +45,7 @@ namespace AngryGuards {
 				atWar = true;
 			}
 
-			for (int i = 0; i < Players.CountConnected; i++) {
-				Players.Player candidate = Players.GetConnectedByIndex(i);
+			foreach (Players.Player candidate in Players.ConnectedPlayers) {
 				if (friendlies.Contains(candidate)) {
 					continue;
 				}
@@ -59,14 +58,14 @@ namespace AngryGuards {
 
 				// colonies at war are always active mode and also shoot mounted players
 				if (!atWar) {
-					if (AngryGuards.ModeSetting == GuardMode.Passive) {
+					if (AngryGuards.config.GuardMode == GuardModeSetting.Passive) {
 						if (!colonyEnemies.ContainsKey(owner) || !colonyEnemies[owner].Contains(candidate)) {
 							continue;
 						}
 					}
 
 					// avoid shooting players on gliders. but still shoot them when they kill NPCs
-					if (!AngryGuards.ShootMountedPlayers && MeshedObjectManager.HasVehicle(candidate)) {
+					if (!AngryGuards.config.ShootMountedPlayers && MeshedObjectManager.HasVehicle(candidate)) {
 						if (!colonyEnemies.ContainsKey(owner) || !colonyEnemies[owner].Contains(candidate)) {
 							continue;
 						}
@@ -162,66 +161,27 @@ namespace AngryGuards {
 		public static void Save()
 		{
 			Log.Write($"Saving {CONFIG_FILE}");
-			JSONNode configJson = new JSONNode();
-
-			JSONNode playersJson = new JSONNode(NodeType.Array);
-			foreach (KeyValuePair<Players.Player, List<Players.Player>> kvp in friendlyPlayers) {
-				JSONNode playerJson = new JSONNode();
-				Players.Player owner = kvp.Key;
-				playerJson.SetAs("owner", owner.ID.steamID);
-				JSONNode recordsJson = new JSONNode(NodeType.Array);
-				foreach (Players.Player friend in kvp.Value) {
-					JSONNode friendJson = new JSONNode();
-					friendJson.SetAs(friend.ID.steamID);
-					recordsJson.AddToArray(friendJson);
-				}
-				playerJson.SetAs("friendly", recordsJson);
-				playersJson.AddToArray(playerJson);
-			}
-			configJson.SetAs("players", playersJson);
-
 			try {
-				JSON.Serialize(ConfigFilePath, configJson);
+				JsonSerializer json = new JsonSerializer();
+				JsonTextWriter jsonWriter = new JsonTextWriter(new StreamWriter(ConfigFilePath));
+				json.Serialize(jsonWriter, friendlyPlayers);
+				jsonWriter.Flush();
 			} catch (Exception e) {
 				Log.Write($"Error saving {CONFIG_FILE}: {e.Message}");
 			}
-			return;
 		}
 
 		// Load config from JSON file
 		public static void Load()
 		{
-			JSONNode configJson;
-			if (!JSON.Deserialize(ConfigFilePath, out configJson, false)) {
-				Log.Write($"{CONFIG_FILE} not found, no friendly lists defined");
-				return;
-			}
-
 			Log.Write($"Loading friendly list from {CONFIG_FILE}");
 			try {
-				JSONNode playersJson;
-				configJson.TryGetAs("players", out playersJson);
-				foreach (JSONNode record in playersJson.LoopArray()) {
-					Players.Player owner;
-					string error;
-					if (!PlayerHelper.TryGetPlayer(record.GetAs<string>("owner"), out owner, out error, true)) {
-						continue;
-					}
-					List<Players.Player> friends = new List<Players.Player>();
-					JSONNode friendsJson;
-					record.TryGetAs("friendly", out friendsJson);
-					foreach (JSONNode friendJson in friendsJson.LoopArray()) {
-						Players.Player target;
-						if (PlayerHelper.TryGetPlayer(friendJson.GetAs<string>(), out target, out error, true)) {
-							friends.Add(target);
-						}
-					}
-					friendlyPlayers[owner] = friends;
-				}
+				JsonSerializer json = new JsonSerializer();
+				JsonTextReader jsonReader = new JsonTextReader(new StreamReader(ConfigFilePath));
+				friendlyPlayers = json.Deserialize<Dictionary<Players.Player, List<Players.Player>>>(jsonReader);
 			} catch (Exception e) {
 				Log.Write($"Error parsing {CONFIG_FILE}: {e.Message}");
 			}
-			return;
 		}
 	}
 

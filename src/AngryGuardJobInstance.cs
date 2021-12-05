@@ -7,8 +7,9 @@ namespace AngryGuards {
 	public class AngryGuardJobInstance: BlockJobInstance
 	{
 		public Players.Player target;
-		public Vector3 eyePosition;
+		//public Vector3 eyePosition;
 
+/*
 		public AngryGuardJobInstance(IBlockJobSettings settings, Pipliz.Vector3Int position, ItemTypes.ItemType type, ByteReader reader): base(settings, position, type, reader)
 		{
 			this.eyePosition = position.Vector;
@@ -20,6 +21,7 @@ namespace AngryGuards {
 			this.eyePosition = position.Vector;
 			this.eyePosition[1] += 1;
 		}
+*/
 	}
 
 }

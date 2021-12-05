@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace AngryGuards {
 
-	public class AngryGuardJobSettings: IBlockJobSettings
+	public class AngryGuardJobSettings: BlockJobSettingsSpawnableDefault<AngryGuardJobInstance>
 	{
 		public string ident;
 		public enum EGuardSleepType: byte
@@ -16,9 +16,9 @@ namespace AngryGuards {
 			Night
 		}
 
-		public ItemTypes.ItemType[] BlockTypes { get; set; }
-		public NPCType NPCType { get; set; }
-		public InventoryItem RecruitmentItem { get; set; }
+		// public ItemTypes.ItemType[] BlockTypes { get; set; }
+		// public NPCType NPCType { get; set; }
+		//public InventoryItem RecruitmentItem { get; set; }
 		public string OnShootAudio;
 		public List<InventoryItem> ShootItem;
 		public EGuardSleepType SleepType;
@@ -31,6 +31,7 @@ namespace AngryGuards {
 		public float SleepSafetyPeriod;
 		public string OnHitAudio;
 
+/*
 		public float NPCShopGameHourMinimum
 		{
 			get
@@ -56,7 +57,9 @@ namespace AngryGuards {
 				return settings.GuardShiftDayEnd + 0.1f;
 			}
 		}
+*/
 
+/*
 		public bool ToSleep
 		{
 			get
@@ -75,6 +78,7 @@ namespace AngryGuards {
 				return true;
 			}
 		}
+*/
 
 		public AngryGuardJobSettings(string blockTypeKey, string npcTypeKey, EGuardSleepType sleepType, int damage, int range, int cooldownShot, string shootAudio, InventoryItem shootItem, InventoryItem recruitmentItem)
 		{
@@ -91,7 +95,7 @@ namespace AngryGuards {
 			this.SleepType = sleepType;
 			this.Damage = damage;
 			this.Range = range;
-			this.RecruitmentItem = recruitmentItem;
+			//this.RecruitmentItem = recruitmentItem;
 			this.CooldownShot = cooldownShot;
 
 			// those are static for all
@@ -102,11 +106,11 @@ namespace AngryGuards {
 		}
 
 		// perform guard duty
-		public void OnNPCAtJob(BlockJobInstance blockInstance, ref NPCBase.NPCState state)
+		public override void OnNPCAtJob(BlockJobInstance blockInstance, ref NPCBase.NPCState state)
 		{
 			AngryGuardJobInstance instance = (AngryGuardJobInstance)blockInstance;
 
-			instance.target = PlayerTracker.FindTarget(instance.Owner, instance.eyePosition, this.Range);
+			instance.target = PlayerTracker.FindTarget(instance.Owner, instance.Position.Add(0, 1, 0).Vector, this.Range);
 
 			if (instance.target != null) {
 				Vector3 positionToAimFor = instance.target.Position;
@@ -142,40 +146,43 @@ namespace AngryGuards {
 		public void ShootAtTarget(AngryGuardJobInstance instance, ref NPCBase.NPCState state)
 		{
 			if (!instance.Owner.Stockpile.TryRemove(this.ShootItem)) {
-				state.SetIndicator(new IndicatorState(this.CooldownMissingItem, this.ShootItem[0].Type, true, false), true);
+				state.SetIndicator(IndicatorState.NewMissingItemIndicator(this.CooldownMissingItem, this.ShootItem[0].Type));
 				return;
 			}
 
+			Vector3 eyePosition = instance.Position.Add(0, 1, 0).Vector;
 			if (this.OnShootAudio != null) {
-				AudioManager.SendAudio(instance.eyePosition, this.OnShootAudio);
+				AudioManager.SendAudio(eyePosition, this.OnShootAudio);
 			}
 			if (this.OnHitAudio != null) {
 				AudioManager.SendAudio(instance.target.Position, this.OnHitAudio);
 			}
 			Vector3 positionToAimFor = instance.target.Position;
-			positionToAimFor[1] += 1;
-			Vector3 normalized = Vector3.Normalize(positionToAimFor - instance.eyePosition);
-			ServerManager.SendParticleTrail(instance.eyePosition + normalized * 0.15f, positionToAimFor - normalized * 0.15f, Pipliz.Random.NextFloat(1.5f, 2.5f));
+			positionToAimFor.y += 1;
+			Vector3 normalized = Vector3.Normalize(positionToAimFor - eyePosition);
+			ServerManager.SendParticleTrail(eyePosition + normalized * 0.15f, positionToAimFor - normalized * 0.15f, Pipliz.Random.NextFloat(1.5f, 2.5f));
 
 			Players.TakeHit(instance.target, (float)this.Damage, instance.NPC, ModLoader.OnHitData.EHitSourceType.NPC);
-			state.SetIndicator(new IndicatorState(this.CooldownShot, this.ShootItem[0].Type, false, true), true);
+			state.SetIndicator(IndicatorState.NewItemIndicator(this.CooldownShot, this.ShootItem[0].Type));
 			if (this.OnShootResultItem.item.Type > 0 && Pipliz.Random.NextDouble(0.0, 1.0) <= this.OnShootResultItem.chance) {
 				instance.Owner.Stockpile.Add(this.OnShootResultItem.item);
 			}
 		}
 
 		// unused for guards
-		public void OnNPCAtStockpile(BlockJobInstance blockInstance, ref NPCBase.NPCState state)
+		public override void OnNPCAtStockpile(BlockJobInstance blockInstance, ref NPCBase.NPCState state)
 		{
 		}
 
+/*
 		// unused for guards
 		public void OnGoalChanged(BlockJobInstance blockInstance, INPCGoal goalOld, INPCGoal goalNew)
 		{
 		}
+*/
 
 		// get location for the NPC to walk to
-		public Pipliz.Vector3Int GetJobLocation(BlockJobInstance blockInstance)
+		public override Pipliz.Vector3Int GetJobLocation(BlockJobInstance blockInstance)
 		{
 			return blockInstance.Position;
 		}

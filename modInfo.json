@@ -2,12 +2,12 @@
   {
     "name" : "Angry Guards",
     "description" : "Guards that target enemy players",
-    "version" : "1.0.2",
+    "version" : "1.1.0",
 	"isoptional" : true,
 	"enableddefault" : true,
     "dllpath" : "AngryGuards.dll",
     "compatibleversions" : [
-		"0.7.1","0.8.0"
+		"0.9.0"
     ],
     "jsonFiles" : [
       { "fileType" : "addOrOverrideTextureMappingEntries",
@@ -30,6 +30,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "1.1.0", "notes": [
+			"updated for game version 0.9"
+		] },
 		{ "version": "1.0.2", "notes": [
 			"guards no longer shoot already dead players"
 		] },

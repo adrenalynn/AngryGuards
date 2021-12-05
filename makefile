@@ -6,9 +6,10 @@ zipname = $(modname)-$(version).zip
 zip_files_extra = types.json angryguards-config.json texturemapping.json recipes_crafter.json science.json icons localization textures meshes
 builddir = $(modname)
 gamedir = /local/games/Steam/steamapps/common/Colony\ Survival
+libdir = $(gamedir)/colonyserver_Data/Managed
 
 $(dllname): src/*.cs
-	mcs /target:library -nostdlib -r:$(gamedir)/colonyserver_Data/Managed/Assembly-CSharp.dll,$(gamedir)/colonyserver_Data/Managed/UnityEngine.CoreModule.dll,$(gamedir)/colonyserver_Data/Managed/mscorlib.dll,$(gamedir)/colonyserver_Data/Managed/System.dll,$(gamedir)/colonyserver_Data/Managed/System.Core.dll,$(gamedir)/colonyserver_Data/Managed/Steamworks.NET.dll -out:"$(dllname)" -sdk:4 -recurse:'src/*.cs'
+	mcs /target:library -nostdlib -r:$(libdir)/Assembly-CSharp.dll,$(libdir)/UnityEngine.CoreModule.dll,$(libdir)/mscorlib.dll,$(libdir)/System.dll,$(libdir)/System.Core.dll,$(libdir)/Steamworks.NET.dll,$(libdir)/Newtonsoft.Json.dll -out:"$(dllname)" -sdk:4 -recurse:'src/*.cs'
 
 $(zipname): $(dllname) $(zip_files_extra)
 	$(RM) $(zipname)

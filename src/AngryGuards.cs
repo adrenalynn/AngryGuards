@@ -1,8 +1,8 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using Pipliz;
-using Pipliz.JSON;
 using BlockEntities.Implementations;
 using Jobs;
 using Chatting;
@@ -11,10 +11,33 @@ namespace AngryGuards {
 
 	// Active: guards shoot all players (unless friendly)
 	// Passive: guards shoot players only after they attack colonists
-	public enum GuardMode {
+	public enum GuardModeSetting {
 		Active,
 		Passive
 	};
+
+	// Weapon definition
+	public struct Weapon {
+		public int Damage, Reload, Range;
+
+		public Weapon(int d, int r, int l)
+		{
+			Damage = d;
+			Range = r;
+			Reload = l;
+		}
+	}
+
+	// Config
+	public class ModConfig
+	{
+		public Weapon Bow { get; set; }
+		public Weapon Crossbow { get; set; }
+		public Weapon MatchlockGun { get; set; }
+		public GuardModeSetting GuardMode { get; set; }
+		public bool ShootMountedPlayers { get; set; }
+		public int PassiveProtectionRange { get; set; }
+	}
 
 	[ModLoader.ModManager]
 	public static class AngryGuards
@@ -22,26 +45,8 @@ namespace AngryGuards {
 		public const string NAMESPACE = "AngryGuards";
 		public const string PERMISSION_PREFIX = "mods.angryguards";
 
-		// config definitions
-		public struct Weapon {
-			public int Damage, Reload, Range;
-
-			public Weapon(int d, int r, int l)
-			{
-				Damage = d;
-				Range = r;
-				Reload = l;
-			}
-		}
-		public static Weapon Bow = new Weapon(45, 20, 5);
-		public static Weapon Crossbow = new Weapon(85, 25, 8);
-		public static Weapon MatchlockGun = new Weapon(500, 30, 12);
-
-		public static GuardMode ModeSetting = GuardMode.Active;
 		public static List<Colony> ColonyWarMode = new List<Colony>();
-		public static bool ShootMountedPlayers = false;
-		public static int PassiveProtectionRange = 100;
-
+		public static ModConfig config;
 		private const string CONFIG_FILE = "angryguards-config.json";
 		private static string ConfigFilePath {
 			get {
@@ -62,14 +67,14 @@ namespace AngryGuards {
 			AngryGuardJobSettings BowGuardDay = new AngryGuardJobSettings(
 				"angryguards.guardbowday", "pipliz.guardbowday",
 				AngryGuardJobSettings.EGuardSleepType.Night,
-				Bow.Damage, Bow.Range, Bow.Reload, "bowShoot",
+				config.Bow.Damage, config.Bow.Range, config.Bow.Reload, "bowShoot",
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bronzearrow),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bow)
 			);
 			AngryGuardJobSettings BowGuardNight = new AngryGuardJobSettings(
 				"angryguards.guardbownight", "pipliz.guardbownight",
 				AngryGuardJobSettings.EGuardSleepType.Day,
-				Bow.Damage, Bow.Range, Bow.Reload, "bowShoot",
+				config.Bow.Damage, config.Bow.Range, config.Bow.Reload, "bowShoot",
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bronzearrow),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bow)
 			);
@@ -78,14 +83,14 @@ namespace AngryGuards {
 			AngryGuardJobSettings CrossbowGuardDay = new AngryGuardJobSettings(
 				"angryguards.guardcrossbowday", "pipliz.guardcrossbowday",
 				AngryGuardJobSettings.EGuardSleepType.Night,
-				Crossbow.Damage, Crossbow.Range, Crossbow.Reload, "bowShoot",
+				config.Crossbow.Damage, config.Crossbow.Range, config.Crossbow.Reload, "bowShoot",
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.crossbowbolt),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.crossbow)
 			);
 			AngryGuardJobSettings CrossbowGuardNight = new AngryGuardJobSettings(
 				"angryguards.guardcrossbownight", "pipliz.guardcrossbownight",
 				AngryGuardJobSettings.EGuardSleepType.Day,
-				Crossbow.Damage, Crossbow.Range, Crossbow.Reload, "bowShoot",
+				config.Crossbow.Damage, config.Crossbow.Range, config.Crossbow.Reload, "bowShoot",
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.crossbowbolt),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.crossbow)
 			);
@@ -94,22 +99,22 @@ namespace AngryGuards {
 			AngryGuardJobSettings MatchlockGunGuardDay = new AngryGuardJobSettings(
 				"angryguards.guardmatchlockgunday", "pipliz.guardmatchlockday",
 				AngryGuardJobSettings.EGuardSleepType.Night,
-				MatchlockGun.Damage, MatchlockGun.Range, MatchlockGun.Reload, "matchlock",
+				config.MatchlockGun.Damage, config.MatchlockGun.Range, config.MatchlockGun.Reload, "matchlock",
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.leadbullet),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.matchlockgun)
 			);
 			MatchlockGunGuardDay.ShootItem.Add(new InventoryItem(BlockTypes.BuiltinBlocks.Indices.gunpowderpouch));
-			MatchlockGunGuardDay.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.Indices.linenpouch, 1, 0.9f);
+			//MatchlockGunGuardDay.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.Indices.linenpouch, 1, 0.9f);
 
 			AngryGuardJobSettings MatchlockGunGuardNight = new AngryGuardJobSettings(
 				"angryguards.guardmatchlockgunnight", "pipliz.guardmatchlocknight",
 				AngryGuardJobSettings.EGuardSleepType.Day,
-				MatchlockGun.Damage, MatchlockGun.Range, MatchlockGun.Reload, "matchlock",
+				config.MatchlockGun.Damage, config.MatchlockGun.Range, config.MatchlockGun.Reload, "matchlock",
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.leadbullet),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.matchlockgun)
 			);
 			MatchlockGunGuardNight.ShootItem.Add(new InventoryItem(BlockTypes.BuiltinBlocks.Indices.gunpowderpouch));
-			MatchlockGunGuardNight.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.Indices.linenpouch, 1, 0.9f);
+			//MatchlockGunGuardNight.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.Indices.linenpouch, 1, 0.9f);
 
 			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(BowGuardDay));
 			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(BowGuardNight));
@@ -120,61 +125,20 @@ namespace AngryGuards {
 
 
 			CommandManager.RegisterCommand(new FriendlyCommand());
-			Log.Write($"Angry Guards started with guard mode: {ModeSetting}");
+			Log.Write($"Angry Guards started with guard mode: {config.GuardMode}");
 		}
 
 		// Load config
 		public static void LoadConfig()
 		{
-			JSONNode configJson;
-			if (!JSON.Deserialize(ConfigFilePath, out configJson, false)) {
-				Log.Write($"{CONFIG_FILE} not found, using default values");
-				return;
-			}
-
-			Log.Write($"Loading config from {CONFIG_FILE}");
+			Log.Write($"Loading config from {ConfigFilePath}");
 			try {
-				JSONNode weaponJson;
-				if (configJson.TryGetAs("bow", out weaponJson)) {
-					Bow.Damage = weaponJson.GetAs<int>("damage");
-					Bow.Reload = weaponJson.GetAs<int>("reload");
-					Bow.Range = weaponJson.GetAs<int>("range");
-				}
-				if (configJson.TryGetAs("crossbow", out weaponJson)) {
-					Crossbow.Damage = weaponJson.GetAs<int>("damage");
-					Crossbow.Reload = weaponJson.GetAs<int>("reload");
-					Crossbow.Range = weaponJson.GetAs<int>("range");
-				}
-				if (configJson.TryGetAs("matchlockgun", out weaponJson)) {
-					MatchlockGun.Damage = weaponJson.GetAs<int>("damage");
-					MatchlockGun.Reload = weaponJson.GetAs<int>("reload");
-					MatchlockGun.Range = weaponJson.GetAs<int>("range");
-				}
-				string setting;
-				if (configJson.TryGetAs("guardmode", out setting)) {
-					if (setting.Equals("active") || setting.Equals("Active")) {
-						ModeSetting = GuardMode.Active;
-					} else if (setting.Equals("passive") || setting.Equals("Passive")) {
-						ModeSetting = GuardMode.Passive;
-					} else {
-						Log.Write($"ERROR: invalid guardmode setting '{setting}'. Using defaults");
-					}
-				}
-
-				int rangeSetting;
-				if (configJson.TryGetAs("passiveProtectionRange", out rangeSetting)) {
-					PassiveProtectionRange = rangeSetting;
-				}
-
-				bool shootSetting;
-				if (configJson.TryGetAs("shootMountedPlayers", out shootSetting)) {
-						ShootMountedPlayers = shootSetting;
-				}
+				JsonSerializer js = new JsonSerializer();
+				JsonTextReader jtr = new JsonTextReader(new StreamReader(ConfigFilePath));
+				config = js.Deserialize<ModConfig>(jtr);
 			} catch (Exception e) {
 				Log.Write($"Could not parse {CONFIG_FILE}: {e.Message}");
 			}
-
-			return;
 		}
 
 		// Load
@@ -199,8 +163,8 @@ namespace AngryGuards {
 				return;
 			}
 			Players.Player killer = (Players.Player)data.HitSourceObject;
-			foreach (Players.Player owner in npc.Colony.Owners) {
-				if (owner == killer || PlayerTracker.IsFriendly(owner, killer)) {
+			for (int i = 0; i < npc.Colony.Owners.Count; ++i) {
+				if (npc.Colony.Owners[i] == killer || PlayerTracker.IsFriendly(npc.Colony.Owners[i], killer)) {
 					return;
 				}
 			}
@@ -216,19 +180,21 @@ namespace AngryGuards {
 			if (userData.RequestOrigin.Type == BlockChangeRequestOrigin.EType.Player) {
 				causedBy = userData.RequestOrigin.AsPlayer;
 			}
-			if (causedBy == null || AngryGuards.ModeSetting != GuardMode.Passive || PermissionsManager.HasPermission(causedBy, AngryGuards.PERMISSION_PREFIX + ".peacekeeper")) {
+			if (causedBy == null || config.GuardMode != GuardModeSetting.Passive || PermissionsManager.HasPermission(causedBy, AngryGuards.PERMISSION_PREFIX + ".peacekeeper")) {
 				return;
 			}
 
 			// check if the block change is within range of a banner(colony)
-			foreach (Colony checkColony in ServerManager.ColonyTracker.ColoniesByID.Values) {
+			Pipliz.Collections.Hashmap<int, Colony>.ValueEnumerator colonyEnumerator = ServerManager.ColonyTracker.ColoniesByID.GetValueEnumerator();
+			while (colonyEnumerator.MoveNext()) {
+				Colony checkColony = colonyEnumerator.Current;
 				if (IsOwnerOrFriendly(checkColony, causedBy)) {
 					continue;
 				}
-				foreach (BannerTracker.Banner checkBanner in checkColony.Banners) {
-					int distanceX = (int)System.Math.Abs(causedBy.Position.x - checkBanner.Position.x);
-					int distanceZ = (int)System.Math.Abs(causedBy.Position.z - checkBanner.Position.z);
-					if (distanceX < PassiveProtectionRange && distanceZ < PassiveProtectionRange) {
+				for (int i = 0; i < checkColony.Banners.Count; ++i) {
+					int distanceX = (int)System.Math.Abs(causedBy.Position.x - checkColony.Banners[i].Position.x);
+					int distanceZ = (int)System.Math.Abs(causedBy.Position.z - checkColony.Banners[i].Position.z);
+					if (distanceX < config.PassiveProtectionRange && distanceZ < config.PassiveProtectionRange) {
 						PlayerTracker.AddEnemy(checkColony, causedBy);
 						return;
 					}
@@ -242,8 +208,8 @@ namespace AngryGuards {
 			if (colony.Owners.ContainsByReference(candidate)) {
 				return true;
 			}
-			foreach (Players.Player owner in colony.Owners) {
-				if (PlayerTracker.IsFriendly(owner, candidate)) {
+			for (int i = 0; i < colony.Owners.Count; ++i) {
+				if (PlayerTracker.IsFriendly(colony.Owners[i], candidate)) {
 					return true;
 				}
 			}
