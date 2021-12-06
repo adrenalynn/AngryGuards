@@ -39,11 +39,11 @@ namespace AngryGuards {
 		public int PassiveProtectionRange { get; set; }
 	}
 
-	[ModLoader.ModManager]
 	public static class AngryGuards
 	{
 		public const string NAMESPACE = "AngryGuards";
 		public const string PERMISSION_PREFIX = "mods.angryguards";
+		public static ModInterfaces interfaces = new ModInterfaces();
 
 		public static List<Colony> ColonyWarMode = new List<Colony>();
 		public static ModConfig config;
@@ -55,10 +55,6 @@ namespace AngryGuards {
 		}
 
 		// initialize blocks and jobs
-		[ModLoader.ModCallback(ModLoader.EModCallbackType.AfterItemTypesDefined, NAMESPACE + ".RegisterJobs")]
-		[ModLoader.ModCallbackDependsOn("create_servermanager_trackers")]
-		[ModLoader.ModCallbackDependsOn("pipliz.server.loadnpctypes")]
-		[ModLoader.ModCallbackProvidesFor("create_savemanager")]
 		public static void AfterItemTypesDefined()
 		{
 			LoadConfig();
@@ -142,21 +138,18 @@ namespace AngryGuards {
 		}
 
 		// Load
-		[ModLoader.ModCallback(ModLoader.EModCallbackType.AfterWorldLoad, NAMESPACE + ".AfterWorldLoad")]
 		public static void AfterWorldLoad()
 		{
 			PlayerTracker.Load();
 		}
 
 		// Save
-		[ModLoader.ModCallback(ModLoader.EModCallbackType.OnQuit, NAMESPACE + ".OnQuit")]
 		public static void OnQuit()
 		{
 			PlayerTracker.Save();
 		}
 
 		// track NPC hits/kills for passive mode
-		[ModLoader.ModCallback(ModLoader.EModCallbackType.OnNPCHit, NAMESPACE + ".OnNPCHit")]
 		public static void OnNPCHit(NPC.NPCBase npc, ModLoader.OnHitData data)
 		{
 			if (!(data.HitSourceObject is Players.Player)) {
@@ -173,7 +166,6 @@ namespace AngryGuards {
 		}
 
 		// track block changes within banner range for passive mode
-		[ModLoader.ModCallback(ModLoader.EModCallbackType.OnTryChangeBlock, NAMESPACE + ".OnTryChangeBlock")]
 		public static void OnTryChangeBlock(ModLoader.OnTryChangeBlockData userData)
 		{
 			Players.Player causedBy = null;

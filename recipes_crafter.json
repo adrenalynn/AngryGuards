@@ -1,5 +1,6 @@
 [
   {
+	"cooldown": 5.0,
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
@@ -12,6 +13,7 @@
     ]
   },
   {
+	"cooldown": 5.0,
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
@@ -24,6 +26,7 @@
     ]
   },
   {
+	"cooldown": 5.0,
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
@@ -36,6 +39,7 @@
     ]
   },
   {
+	"cooldown": 5.0,
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
@@ -48,6 +52,7 @@
     ]
   },
   {
+	"cooldown": 5.0,
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
@@ -60,6 +65,7 @@
     ]
   },
   {
+	"cooldown": 5.0,
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
