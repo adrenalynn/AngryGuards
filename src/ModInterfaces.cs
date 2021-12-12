@@ -2,8 +2,13 @@ using ModLoaderInterfaces;
 
 namespace AngryGuards {
 
-	public class ModInterfaces: IAfterItemTypesDefined, IAfterWorldLoad, IOnQuit, IOnNPCHit, IOnTryChangeBlock
+	public class ModInterfaces: IOnAssemblyLoaded, IAfterItemTypesDefined, IAfterWorldLoad, IOnQuit, IOnNPCHit, IOnTryChangeBlock
 	{
+
+		public void OnAssemblyLoaded(string path)
+		{
+			AngryGuards.OnAssemblyLoaded(path);
+		}
 
 		public void AfterItemTypesDefined()
 		{

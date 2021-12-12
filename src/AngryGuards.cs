@@ -43,6 +43,7 @@ namespace AngryGuards {
 	{
 		public const string NAMESPACE = "AngryGuards";
 		public const string PERMISSION_PREFIX = "mods.angryguards";
+		public static string MOD_DIRECTORY;
 		public static ModInterfaces interfaces = new ModInterfaces();
 
 		public static List<Colony> ColonyWarMode = new List<Colony>();
@@ -52,6 +53,11 @@ namespace AngryGuards {
 			get {
 				return Path.Combine(Path.Combine("gamedata", "savegames"), Path.Combine(ServerManager.WorldName, CONFIG_FILE));
 			}
+		}
+
+		public static void OnAssemblyLoaded(string path)
+		{
+			MOD_DIRECTORY = Path.GetDirectoryName(path);
 		}
 
 		// initialize blocks and jobs
@@ -127,7 +133,13 @@ namespace AngryGuards {
 		// Load config
 		public static void LoadConfig()
 		{
-			Log.Write($"Loading config from {ConfigFilePath}");
+			if (!File.Exists(ConfigFilePath)) {
+				// copy default config from mod directory to world savegame directory
+				File.Copy(Path.Combine(MOD_DIRECTORY, CONFIG_FILE), ConfigFilePath);
+				Log.Write($"Creating default configuration {ConfigFilePath}");
+			} else {
+				Log.Write($"Loading config from {ConfigFilePath}");
+			}
 			try {
 				JsonSerializer js = new JsonSerializer();
 				JsonTextReader jtr = new JsonTextReader(new StreamReader(ConfigFilePath));

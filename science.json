@@ -7,7 +7,7 @@
 			{ "type": "bronzearrow", "amount": 3 }
 		],
 		"dependencies": [
-			"pipliz.baseresearch.archery"
+			"pipliz.archery"
 		],
 		"unlocksRecipes": [
 			"angryguards.crafter.guardbowday",
@@ -23,7 +23,7 @@
 			{ "type": "crossbow" }
 		],
 		"dependencies": [
-			"pipliz.baseresearch.crossbow",
+			"pipliz.crossbow",
 			"angryguards.research.angryguardbow"
 		],
 		"unlocksRecipes": [
@@ -40,7 +40,6 @@
 			{ "type": "matchlockgun" }
 		],
 		"dependencies": [
-			"pipliz.baseresearch.matchlockgun",
 			"angryguards.research.angryguardcrossbow"
 		],
 		"unlocksRecipes": [

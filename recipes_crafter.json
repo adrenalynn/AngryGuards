@@ -6,7 +6,7 @@
 	"isOptional": true,
     "name" : "angryguards.crafter.guardbowday",
     "requires" : [
-      { "amount": 1, "type": "coatedplanks" }
+      { "amount": 1, "type": "planks" }
     ],
     "results" : [
       { "type": "angryguards.guardbowday" }
@@ -19,7 +19,7 @@
 	"isOptional": true,
     "name" : "angryguards.crafter.guardbownight",
     "requires" : [
-      { "amount": 1, "type": "coatedplanks" }
+      { "amount": 1, "type": "planks" }
     ],
     "results" : [
       { "type": "angryguards.guardbownight" }
@@ -32,7 +32,7 @@
 	"isOptional": true,
     "name" : "angryguards.crafter.guardcrossbowday",
     "requires" : [
-      { "amount": 2, "type": "coatedplanks" }
+      { "amount": 2, "type": "planks" }
     ],
     "results" : [
       { "type": "angryguards.guardcrossbowday" }
@@ -45,7 +45,7 @@
 	"isOptional": true,
     "name" : "angryguards.crafter.guardcrossbownight",
     "requires" : [
-      { "amount": 2, "type": "coatedplanks" }
+      { "amount": 2, "type": "planks" }
     ],
     "results" : [
       { "type": "angryguards.guardcrossbownight" }
@@ -58,7 +58,7 @@
 	"isOptional": true,
     "name" : "angryguards.crafter.guardmatchlockgunday",
     "requires" : [
-      { "amount": 3, "type": "coatedplanks" }
+      { "amount": 3, "type": "planks" }
     ],
     "results" : [
       { "type": "angryguards.guardmatchlockgunday" }
@@ -71,7 +71,7 @@
 	"isOptional": true,
     "name" : "angryguards.crafter.guardmatchlockgunnight",
     "requires" : [
-      { "amount": 3, "type": "coatedplanks" }
+      { "amount": 3, "type": "planks" }
     ],
     "results" : [
       { "type": "angryguards.guardmatchlockgunnight" }
