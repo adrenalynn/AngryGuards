@@ -145,7 +145,7 @@ namespace AngryGuards {
 		// Do shoot 
 		public void ShootAtTarget(AngryGuardJobInstance instance, ref NPCBase.NPCState state)
 		{
-			if (!instance.Owner.Stockpile.TryRemove(this.ShootItem)) {
+			if (!instance.Owner.ColonyGroup.Stockpile.TryRemove(this.ShootItem)) {
 				state.SetIndicator(IndicatorState.NewMissingItemIndicator(this.CooldownMissingItem, this.ShootItem[0].Type));
 				return;
 			}
@@ -165,7 +165,7 @@ namespace AngryGuards {
 			Players.TakeHit(instance.target, (float)this.Damage, instance.NPC, ModLoader.OnHitData.EHitSourceType.NPC);
 			state.SetIndicator(IndicatorState.NewItemIndicator(this.CooldownShot, this.ShootItem[0].Type));
 			if (this.OnShootResultItem.item.Type > 0 && Pipliz.Random.NextDouble(0.0, 1.0) <= this.OnShootResultItem.chance) {
-				instance.Owner.Stockpile.Add(this.OnShootResultItem.item);
+				instance.Owner.ColonyGroup.Stockpile.Add(this.OnShootResultItem.item);
 			}
 		}
 

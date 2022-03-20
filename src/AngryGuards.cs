@@ -70,14 +70,14 @@ namespace AngryGuards {
 				"angryguards.guardbowday", "pipliz.guardbowday",
 				AngryGuardJobSettings.EGuardSleepType.Night,
 				config.Bow.Damage, config.Bow.Range, config.Bow.Reload, "bowShoot",
-				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bronzearrow),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.copperarrow),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bow)
 			);
 			AngryGuardJobSettings BowGuardNight = new AngryGuardJobSettings(
 				"angryguards.guardbownight", "pipliz.guardbownight",
 				AngryGuardJobSettings.EGuardSleepType.Day,
 				config.Bow.Damage, config.Bow.Range, config.Bow.Reload, "bowShoot",
-				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bronzearrow),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.copperarrow),
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.bow)
 			);
 
@@ -168,8 +168,8 @@ namespace AngryGuards {
 				return;
 			}
 			Players.Player killer = (Players.Player)data.HitSourceObject;
-			for (int i = 0; i < npc.Colony.Owners.Count; ++i) {
-				if (npc.Colony.Owners[i] == killer || PlayerTracker.IsFriendly(npc.Colony.Owners[i], killer)) {
+			for (int i = 0; i < npc.Colony.ColonyGroup.Owners.Count; ++i) {
+				if (npc.Colony.ColonyGroup.Owners[i] == killer || PlayerTracker.IsFriendly(npc.Colony.ColonyGroup.Owners[i], killer)) {
 					return;
 				}
 			}
@@ -189,7 +189,7 @@ namespace AngryGuards {
 			}
 
 			// check if the block change is within range of a banner(colony)
-			Pipliz.Collections.Hashmap<int, Colony>.ValueEnumerator colonyEnumerator = ServerManager.ColonyTracker.ColoniesByID.GetValueEnumerator();
+			Pipliz.Collections.Hashmap<ColonyID, Colony>.ValueEnumerator colonyEnumerator = ServerManager.ColonyTracker.ColoniesByID.GetValueEnumerator();
 			while (colonyEnumerator.MoveNext()) {
 				Colony checkColony = colonyEnumerator.Current;
 				if (IsOwnerOrFriendly(checkColony, causedBy)) {
@@ -209,11 +209,11 @@ namespace AngryGuards {
 
 		public static bool IsOwnerOrFriendly(Colony colony, Players.Player candidate)
 		{
-			if (colony.Owners.ContainsByReference(candidate)) {
+			if (colony.ColonyGroup.Owners.ContainsByReference(candidate)) {
 				return true;
 			}
-			for (int i = 0; i < colony.Owners.Count; ++i) {
-				if (PlayerTracker.IsFriendly(colony.Owners[i], candidate)) {
+			for (int i = 0; i < colony.ColonyGroup.Owners.Count; ++i) {
+				if (PlayerTracker.IsFriendly(colony.ColonyGroup.Owners[i], candidate)) {
 					return true;
 				}
 			}

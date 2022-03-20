@@ -33,11 +33,11 @@ namespace AngryGuards {
 			float shortestDistance = range + 1.0f;
 
 			List<Players.Player> friendlies = new List<Players.Player>();
-			for (int i = 0; i < owner.Owners.Count; ++i) {
-				if (friendlyPlayers.ContainsKey(owner.Owners[i])) {
-					friendlies.AddRange(friendlyPlayers[owner.Owners[i]]);
+			for (int i = 0; i < owner.ColonyGroup.Owners.Count; ++i) {
+				if (friendlyPlayers.ContainsKey(owner.ColonyGroup.Owners[i])) {
+					friendlies.AddRange(friendlyPlayers[owner.ColonyGroup.Owners[i]]);
 				}
-				friendlies.Add(owner.Owners[i]);
+				friendlies.Add(owner.ColonyGroup.Owners[i]);
 			}
 
 			bool atWar = false;

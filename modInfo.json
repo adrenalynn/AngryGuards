@@ -31,7 +31,7 @@
     ],
 	"patchnotes": [
 		{ "version": "1.1.0", "notes": [
-			"updated for game version 0.9"
+			"updated for Colony Survival 0.9"
 		] },
 		{ "version": "1.0.2", "notes": [
 			"guards no longer shoot already dead players"
