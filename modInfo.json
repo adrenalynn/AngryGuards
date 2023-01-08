@@ -20,9 +20,9 @@
 	    "relativePath": "localization/en-US.json"
 	  },
 	  { "fileType": "addOrReplaceNPCRecipes",
-	    "relativePath": "recipes_tinkerer.json",
-		"npcType": "pipliz.tinkerer",
-		"limitsUIMapping": [ "tinkerertable" ]
+	    "relativePath": "recipes_jobblockcrafter.json",
+		"npcType": "pipliz.jobblockcrafter",
+		"limitsUIMapping": [ "jobblockcrafter" ]
 	  },
 	  { "fileType": "addScience",
 	    "index" : -1000000,

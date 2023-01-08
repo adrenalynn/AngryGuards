@@ -2,9 +2,9 @@
 	{
 		"icon": "./icons/angryguardbow.png",
 		"key": "angryguards.research.angryguardbow",
-		"iterationCount": 10,
-		"iterationRequirements" : [
-			{ "type": "bronzearrow", "amount": 3 }
+		"itemRequirements" : [
+			{ "type": "bronzearrow", "amount": 50 },
+			{ "type": "bow" }
 		],
 		"dependencies": [
 			"pipliz.archery"
@@ -17,9 +17,8 @@
 	{
 		"icon": "./icons/angryguardcrossbow.png",
 		"key": "angryguards.research.angryguardcrossbow",
-		"iterationCount": 10,
-		"iterationRequirements" : [
-			{ "type": "crossbowbolt", "amount": 3 },
+		"itemRequirements" : [
+			{ "type": "crossbowbolt", "amount": 50 },
 			{ "type": "crossbow" }
 		],
 		"dependencies": [
@@ -34,12 +33,12 @@
 	{
 		"icon": "./icons/angryguardmusket.png",
 		"key": "angryguards.research.angryguardmusket",
-		"iterationCount": 10,
-		"iterationRequirements" : [
-			{ "type": "leadbullet", "amount": 5 },
+		"itemRequirements" : [
+			{ "type": "leadbullet", "amount": 50 },
 			{ "type": "musket" }
 		],
 		"dependencies": [
+			"pipliz.musket",
 			"angryguards.research.angryguardcrossbow"
 		],
 		"unlocksRecipes": [

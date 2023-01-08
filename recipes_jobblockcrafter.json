@@ -4,10 +4,11 @@
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
-    "name" : "angryguards.crafter.guardbowday",
+    "name" : "angryguards.jobblockcrafter.guardbowday",
     "requires" : [
       { "amount": 1, "type": "planks" }
     ],
+    "requiresScience": "angryguards.research.angryguardbow",
     "results" : [
       { "type": "angryguards.guardbowday" }
     ]
@@ -17,10 +18,11 @@
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
-    "name" : "angryguards.crafter.guardbownight",
+    "name" : "angryguards.jobblockcrafter.guardbownight",
     "requires" : [
       { "amount": 1, "type": "planks" }
     ],
+    "requiresScience": "angryguards.research.angryguardbow",
     "results" : [
       { "type": "angryguards.guardbownight" }
     ]
@@ -30,10 +32,11 @@
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
-    "name" : "angryguards.crafter.guardcrossbowday",
+    "name" : "angryguards.jobblockcrafter.guardcrossbowday",
     "requires" : [
       { "amount": 2, "type": "planks" }
     ],
+    "requiresScience": "angryguards.research.angryguardcrossbow",
     "results" : [
       { "type": "angryguards.guardcrossbowday" }
     ]
@@ -43,10 +46,11 @@
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
-    "name" : "angryguards.crafter.guardcrossbownight",
+    "name" : "angryguards.jobblockcrafter.guardcrossbownight",
     "requires" : [
       { "amount": 2, "type": "planks" }
     ],
+    "requiresScience": "angryguards.research.angryguardcrossbow",
     "results" : [
       { "type": "angryguards.guardcrossbownight" }
     ]
@@ -56,10 +60,11 @@
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
-    "name" : "angryguards.crafter.guardmusketday",
+    "name" : "angryguards.jobblockcrafter.guardmusketday",
     "requires" : [
       { "amount": 3, "type": "planks" }
     ],
+    "requiresScience": "angryguards.research.angryguardmusket",
     "results" : [
       { "type": "angryguards.guardmusketday" }
     ]
@@ -69,10 +74,11 @@
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
-    "name" : "angryguards.crafter.guardmusketnight",
+    "name" : "angryguards.jobblockcrafter.guardmusketnight",
     "requires" : [
       { "amount": 3, "type": "planks" }
     ],
+    "requiresScience": "angryguards.research.angryguardmusket",
     "results" : [
       { "type": "angryguards.guardmusketnight" }
     ]
