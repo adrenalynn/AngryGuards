@@ -147,14 +147,14 @@
     "parentType" : "angryguards.guardcrossbownight",
 	"mesh" : "./meshes/guardjobz-.ply"
   },
-  "angryguards.guardmatchlockgunday" : {
+  "angryguards.guardmusketday" : {
     "categories" : [
       "jobs"
     ],
 	"isSolid" : false,
 	"needsBase" : true,
 	"isRotatable" : true,
-    "icon" : "./icons/guardmatchlockgunday.png",
+    "icon" : "./icons/guardmusketday.png",
 	"customData" : {
 		"colors" : ["#ff0000->#969696"]
 	},
@@ -162,36 +162,36 @@
       "boxes" : [{"max":[0.5,-0.4,0.5],"min":[-0.5,-0.5,-0.5]}],
       "collidePlayer" : false
     },
-	"sideall" : "angryguards.guardmatchlockgunday",
-	"rotatablex+" : "angryguards.guardmatchlockgundayx+",
-	"rotatablex-" : "angryguards.guardmatchlockgundayx-",
-	"rotatablez+" : "angryguards.guardmatchlockgundayz+",
-	"rotatablez-" : "angryguards.guardmatchlockgundayz-"
+	"sideall" : "angryguards.guardmusketday",
+	"rotatablex+" : "angryguards.guardmusketdayx+",
+	"rotatablex-" : "angryguards.guardmusketdayx-",
+	"rotatablez+" : "angryguards.guardmusketdayz+",
+	"rotatablez-" : "angryguards.guardmusketdayz-"
   },
-  "angryguards.guardmatchlockgundayx+" : {
-    "parentType" : "angryguards.guardmatchlockgunday",
+  "angryguards.guardmusketdayx+" : {
+    "parentType" : "angryguards.guardmusketday",
 	"mesh" : "./meshes/guardjobx+.ply"
   },
-  "angryguards.guardmatchlockgundayx-" : {
-    "parentType" : "angryguards.guardmatchlockgunday",
+  "angryguards.guardmusketdayx-" : {
+    "parentType" : "angryguards.guardmusketday",
 	"mesh" : "./meshes/guardjobx-.ply"
   },
-  "angryguards.guardmatchlockgundayz+" : {
-    "parentType" : "angryguards.guardmatchlockgunday",
+  "angryguards.guardmusketdayz+" : {
+    "parentType" : "angryguards.guardmusketday",
 	"mesh" : "./meshes/guardjobz+.ply"
   },
-  "angryguards.guardmatchlockgundayz-" : {
-    "parentType" : "angryguards.guardmatchlockgunday",
+  "angryguards.guardmusketdayz-" : {
+    "parentType" : "angryguards.guardmusketday",
 	"mesh" : "./meshes/guardjobz-.ply"
   },
-  "angryguards.guardmatchlockgunnight" : {
+  "angryguards.guardmusketnight" : {
     "categories" : [
       "jobs"
     ],
 	"isSolid" : false,
 	"needsBase" : true,
 	"isRotatable" : true,
-    "icon" : "./icons/guardmatchlockgunnight.png",
+    "icon" : "./icons/guardmusketnight.png",
 	"customData" : {
 		"colors" : ["#ff0000->#969696"]
 	},
@@ -199,26 +199,26 @@
       "boxes" : [{"max":[0.5,-0.4,0.5],"min":[-0.5,-0.5,-0.5]}],
       "collidePlayer" : false
     },
-	"sideall" : "angryguards.guardmatchlockgunnight",
-	"rotatablex+" : "angryguards.guardmatchlockgunnightx+",
-	"rotatablex-" : "angryguards.guardmatchlockgunnightx-",
-	"rotatablez+" : "angryguards.guardmatchlockgunnightz+",
-	"rotatablez-" : "angryguards.guardmatchlockgunnightz-"
+	"sideall" : "angryguards.guardmusketnight",
+	"rotatablex+" : "angryguards.guardmusketnightx+",
+	"rotatablex-" : "angryguards.guardmusketnightx-",
+	"rotatablez+" : "angryguards.guardmusketnightz+",
+	"rotatablez-" : "angryguards.guardmusketnightz-"
   },
-  "angryguards.guardmatchlockgunnightx+" : {
-    "parentType" : "angryguards.guardmatchlockgunnight",
+  "angryguards.guardmusketnightx+" : {
+    "parentType" : "angryguards.guardmusketnight",
 	"mesh" : "./meshes/guardjobx+.ply"
   },
-  "angryguards.guardmatchlockgunnightx-" : {
-    "parentType" : "angryguards.guardmatchlockgunnight",
+  "angryguards.guardmusketnightx-" : {
+    "parentType" : "angryguards.guardmusketnight",
 	"mesh" : "./meshes/guardjobx-.ply"
   },
-  "angryguards.guardmatchlockgunnightz+" : {
-    "parentType" : "angryguards.guardmatchlockgunnight",
+  "angryguards.guardmusketnightz+" : {
+    "parentType" : "angryguards.guardmusketnight",
 	"mesh" : "./meshes/guardjobz+.ply"
   },
-  "angryguards.guardmatchlockgunnightz-" : {
-    "parentType" : "angryguards.guardmatchlockgunnight",
+  "angryguards.guardmusketnightz-" : {
+    "parentType" : "angryguards.guardmusketnight",
 	"mesh" : "./meshes/guardjobz-.ply"
   }
 }

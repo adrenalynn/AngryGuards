@@ -16,6 +16,7 @@ namespace AngryGuards {
 		Passive
 	};
 
+
 	// Weapon definition
 	public struct Weapon {
 		public int Damage, Reload, Range;
@@ -28,16 +29,18 @@ namespace AngryGuards {
 		}
 	}
 
+
 	// Config
 	public class ModConfig
 	{
 		public Weapon Bow { get; set; }
 		public Weapon Crossbow { get; set; }
-		public Weapon MatchlockGun { get; set; }
+		public Weapon Musket { get; set; }
 		public GuardModeSetting GuardMode { get; set; }
 		public bool ShootMountedPlayers { get; set; }
 		public int PassiveProtectionRange { get; set; }
 	}
+
 
 	public static class AngryGuards
 	{
@@ -55,10 +58,12 @@ namespace AngryGuards {
 			}
 		}
 
+
 		public static void OnAssemblyLoaded(string path)
 		{
 			MOD_DIRECTORY = Path.GetDirectoryName(path);
 		}
+
 
 		// initialize blocks and jobs
 		public static void AfterItemTypesDefined()
@@ -97,38 +102,35 @@ namespace AngryGuards {
 				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.crossbow)
 			);
 
-			// Matchlock Gun Guard
-			AngryGuardJobSettings MatchlockGunGuardDay = new AngryGuardJobSettings(
-				"angryguards.guardmatchlockgunday", "pipliz.guardmatchlockday",
+			// Musket Guard
+			AngryGuardJobSettings MusketGuardDay = new AngryGuardJobSettings(
+				"angryguards.guardmusketday", "pipliz.guardmusketday",
 				AngryGuardJobSettings.EGuardSleepType.Night,
-				config.MatchlockGun.Damage, config.MatchlockGun.Range, config.MatchlockGun.Reload, "matchlock",
-				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.leadbullet),
-				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.matchlockgun)
+				config.Musket.Damage, config.Musket.Range, config.Musket.Reload, "musket",
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.musketammo),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.musket)
 			);
-			MatchlockGunGuardDay.ShootItem.Add(new InventoryItem(BlockTypes.BuiltinBlocks.Indices.gunpowderpouch));
-			//MatchlockGunGuardDay.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.Indices.linenpouch, 1, 0.9f);
 
-			AngryGuardJobSettings MatchlockGunGuardNight = new AngryGuardJobSettings(
-				"angryguards.guardmatchlockgunnight", "pipliz.guardmatchlocknight",
+			AngryGuardJobSettings MusketGuardNight = new AngryGuardJobSettings(
+				"angryguards.guardmusketnight", "pipliz.guardmusketnight",
 				AngryGuardJobSettings.EGuardSleepType.Day,
-				config.MatchlockGun.Damage, config.MatchlockGun.Range, config.MatchlockGun.Reload, "matchlock",
-				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.leadbullet),
-				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.matchlockgun)
+				config.Musket.Damage, config.Musket.Range, config.Musket.Reload, "musket",
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.musketammo),
+				new InventoryItem(BlockTypes.BuiltinBlocks.Indices.musket)
 			);
-			MatchlockGunGuardNight.ShootItem.Add(new InventoryItem(BlockTypes.BuiltinBlocks.Indices.gunpowderpouch));
-			//MatchlockGunGuardNight.OnShootResultItem = new ItemTypes.ItemTypeDrops(BlockTypes.BuiltinBlocks.Indices.linenpouch, 1, 0.9f);
 
 			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(BowGuardDay));
 			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(BowGuardNight));
 			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(CrossbowGuardDay));
 			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(CrossbowGuardNight));
-			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(MatchlockGunGuardDay));
-			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(MatchlockGunGuardNight));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(MusketGuardDay));
+			ServerManager.BlockEntityCallbacks.RegisterEntityManager(new BlockJobManager<AngryGuardJobInstance>(MusketGuardNight));
 
 
 			CommandManager.RegisterCommand(new FriendlyCommand());
 			Log.Write($"Angry Guards started with guard mode: {config.GuardMode}");
 		}
+
 
 		// Load config
 		public static void LoadConfig()
@@ -149,17 +151,20 @@ namespace AngryGuards {
 			}
 		}
 
+
 		// Load
 		public static void AfterWorldLoad()
 		{
 			PlayerTracker.Load();
 		}
 
+
 		// Save
 		public static void OnQuit()
 		{
 			PlayerTracker.Save();
 		}
+
 
 		// track NPC hits/kills for passive mode
 		public static void OnNPCHit(NPC.NPCBase npc, ModLoader.OnHitData data)
@@ -176,6 +181,7 @@ namespace AngryGuards {
 
 			PlayerTracker.AddEnemy(npc.Colony, killer);
 		}
+
 
 		// track block changes within banner range for passive mode
 		public static void OnTryChangeBlock(ModLoader.OnTryChangeBlockData userData)
@@ -207,6 +213,7 @@ namespace AngryGuards {
 			return;
 		}
 
+
 		public static bool IsOwnerOrFriendly(Colony colony, Players.Player candidate)
 		{
 			if (colony.ColonyGroup.Owners.ContainsByReference(candidate)) {
@@ -219,6 +226,7 @@ namespace AngryGuards {
 			}
 			return false;
 		}
+
 
 		// This method will be called by other mods to start colony wars. Used by the ColonyCommands mod
 		public static void ColonySetWarMode(Colony colony, bool mode)
@@ -235,6 +243,7 @@ namespace AngryGuards {
 				}
 			}
 		}
+
 
 	} // class
 

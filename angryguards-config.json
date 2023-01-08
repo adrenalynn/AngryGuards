@@ -12,7 +12,7 @@
 		"range": 25,
 		"reload": 8
 	},
-	"matchlockgun" : {
+	"musket" : {
 		"damage": 500,
 		"range": 30,
 		"reload": 12 

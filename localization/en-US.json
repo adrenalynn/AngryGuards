@@ -4,16 +4,16 @@
 		"angryguards.guardbownight" : "Bow Guard (Night)",
 		"angryguards.guardcrossbowday" : "Crossbow Guard (Day)",
 		"angryguards.guardcrossbownight" : "Crossbow Guard (Night)",
-		"angryguards.guardmatchlockgunday" : "Matchlock Gun Guard (Day)",
-		"angryguards.guardmatchlockgunnight" : "Matchlock Gun Guard (Night)"
+		"angryguards.guardmusketday" : "Musket Guard (Day)",
+		"angryguards.guardmusketnight" : "Musket Guard (Night)"
 	},
 	"typeuses" : {
 		"angryguards.guardbowday" : "Shoots almost everything in sight",
 		"angryguards.guardbownight" : "Shoots almost everything in sight",
 		"angryguards.guardcrossbowday" : "Not only angry but also well armed",
 		"angryguards.guardcrossbownight" : "Not only angry but also well armed",
-		"angryguards.guardmatchlockgunday" : "Armed and extremly dangerous",
-		"angryguards.guardmatchlockgunnight" : "Armed and extremly dangerous"
+		"angryguards.guardmusketday" : "Armed and extremly dangerous",
+		"angryguards.guardmusketnight" : "Armed and extremly dangerous"
 	},
 	"sentences": {
 		"angryguards" : {
@@ -26,9 +26,9 @@
 					"name" : "Angry Crossbow Guard",
 					"description" : "Unlocks angry guards with crossbows. When you really want to get them."
 				},
-				"angryguardmatchlockgun": {
-					"name" : "Angry Matchlock Gun Guard",
-					"description" : "Unlocks angry guards with matchlock guns. For a really rainy day - for them, not you."
+				"angryguardmusket": {
+					"name" : "Angry Musket Guard",
+					"description" : "Unlocks angry guards with muskets. For a really rainy day - for them, not you."
 				}
 			}
 		}

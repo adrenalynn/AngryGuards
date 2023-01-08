@@ -56,12 +56,12 @@
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
-    "name" : "angryguards.crafter.guardmatchlockgunday",
+    "name" : "angryguards.crafter.guardmusketday",
     "requires" : [
       { "amount": 3, "type": "planks" }
     ],
     "results" : [
-      { "type": "angryguards.guardmatchlockgunday" }
+      { "type": "angryguards.guardmusketday" }
     ]
   },
   {
@@ -69,12 +69,12 @@
     "defaultLimit" : 5,
     "defaultPriority" : -100,
 	"isOptional": true,
-    "name" : "angryguards.crafter.guardmatchlockgunnight",
+    "name" : "angryguards.crafter.guardmusketnight",
     "requires" : [
       { "amount": 3, "type": "planks" }
     ],
     "results" : [
-      { "type": "angryguards.guardmatchlockgunnight" }
+      { "type": "angryguards.guardmusketnight" }
     ]
   }
 ]

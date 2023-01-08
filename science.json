@@ -32,19 +32,19 @@
 		]
 	},
 	{
-		"icon": "./icons/angryguardmatchlockgun.png",
-		"key": "angryguards.research.angryguardmatchlockgun",
+		"icon": "./icons/angryguardmusket.png",
+		"key": "angryguards.research.angryguardmusket",
 		"iterationCount": 10,
 		"iterationRequirements" : [
 			{ "type": "leadbullet", "amount": 5 },
-			{ "type": "matchlockgun" }
+			{ "type": "musket" }
 		],
 		"dependencies": [
 			"angryguards.research.angryguardcrossbow"
 		],
 		"unlocksRecipes": [
-			"angryguards.crafter.guardmatchlockgunday",
-			"angryguards.crafter.guardmatchlockgunnight"
+			"angryguards.crafter.guardmusketday",
+			"angryguards.crafter.guardmusketnight"
 		]
 	}
 ]

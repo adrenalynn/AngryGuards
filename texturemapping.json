@@ -20,10 +20,10 @@
   "angryguards.guardcrossbownight" : {
     "albedo" : "guardcrossbownight"
   },
-  "angryguards.guardmatchlockgunday" : {
-    "albedo" : "guardmatchlockgunday"
+  "angryguards.guardmusketday" : {
+    "albedo" : "guardmusketday"
   },
-  "angryguards.guardmatchlockgunnight" : {
-    "albedo" : "guardmatchlockgunnight"
+  "angryguards.guardmusketnight" : {
+    "albedo" : "guardmusketnight"
   }
 }

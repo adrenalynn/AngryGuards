@@ -182,9 +182,12 @@ namespace AngryGuards {
 */
 
 		// get location for the NPC to walk to
-		public override Pipliz.Vector3Int GetJobLocation(BlockJobInstance blockInstance)
+		public override Jobs.JobLocation GetJobLocation(BlockJobInstance blockInstance)
 		{
-			return blockInstance.Position;
+			Jobs.JobLocation jobLocation;
+			jobLocation.Location = blockInstance.Position;
+			jobLocation.AllowStandingAtOffset = false;
+			return jobLocation;
 		}
 
 	} // class

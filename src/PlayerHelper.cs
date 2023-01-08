@@ -2,6 +2,7 @@
 using System.IO;
 using Pipliz;
 using System.Text.RegularExpressions;
+using Steamworks;
 
 namespace AngryGuards
 {
@@ -30,9 +31,8 @@ namespace AngryGuards
 			if (ulong.TryParse(identifier, out steamid)) {
 				Steamworks.CSteamID csteamid = new Steamworks.CSteamID(steamid);
 				if (csteamid.IsValid()) {
-					NetworkID networkId = new NetworkID(csteamid);
 					error = "";
-					if (Players.TryGetPlayer(networkId, out targetPlayer)) {
+					if (Players.TryGetPlayer(csteamid, out targetPlayer)) {
 						return true;
 					} else {
 						targetPlayer = null;
@@ -48,7 +48,7 @@ namespace AngryGuards
 					if (!includeOffline && player.ConnectionState != Players.EConnectionState.Connected) {
 						continue;
 					}
-					if (player.ID.steamID.GetHashCode() == givenHash) {
+					if (player.ID.SteamID.GetHashCode() == givenHash) {
 						if (targetPlayer == null) {
 							targetPlayer = player;
 						} else {
