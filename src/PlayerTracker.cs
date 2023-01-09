@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Steamworks;
 using UnityEngine;
 using Pipliz;
 using MeshedObjects;
@@ -11,6 +12,7 @@ namespace AngryGuards {
 
 	public static class PlayerTracker
 	{
+
 		// friendly list per player (guards will not shoot at)
 		private static Dictionary<Players.Player, List<Players.Player>> friendlyPlayers =
 			new Dictionary<Players.Player, List<Players.Player>>();
@@ -25,6 +27,9 @@ namespace AngryGuards {
 				return Path.Combine(Path.Combine("gamedata", "savegames"), Path.Combine(ServerManager.WorldName, CONFIG_FILE));
 			}
 		}
+
+		public static Dictionary<ulong, List<ulong>> friendlyPlayersSaveList;
+
 
 		// find non friendly targets within given range
 		public static Players.Player FindTarget(Colony owner, Vector3 position, int range)
@@ -84,6 +89,7 @@ namespace AngryGuards {
 			return target;
 		}
 
+
 		// get the per-player friendly list as comma separated string
 		public static bool GetFriendlyList(Players.Player owner, out string names)
 		{
@@ -96,6 +102,7 @@ namespace AngryGuards {
 			names = string.Join(", ", friends.Select(x => x.Name).ToArray());
 			return true;
 		}
+
 
 		// add a player to the per-player friendly list
 		public static bool AddFriendly(Players.Player owner, Players.Player target)
@@ -115,6 +122,7 @@ namespace AngryGuards {
 			return true;
 		}
 
+
 		// add a player to the enemy list (for passive mode)
 		public static bool AddEnemy(Colony owner, Players.Player target)
 		{
@@ -132,6 +140,7 @@ namespace AngryGuards {
 			return true;
 		}
 
+
 		// remove a player from the per-player friendly list
 		public static bool RemoveFriendly(Players.Player owner, Players.Player target)
 		{
@@ -148,6 +157,7 @@ namespace AngryGuards {
 			return true;
 		}
 
+
 		// check if friendly for a player
 		public static bool IsFriendly(Players.Player owner, Players.Player candidate)
 		{
@@ -157,19 +167,30 @@ namespace AngryGuards {
 			return false;
 		}
 
+
 		// Save config to JSON file
 		public static void Save()
 		{
+			friendlyPlayersSaveList = new Dictionary<ulong, List<ulong>>();
+			foreach (KeyValuePair<Players.Player, List<Players.Player>> kvp in friendlyPlayers) {
+				List<ulong> steamidList = new List<ulong>();
+				foreach (Players.Player player in kvp.Value) {
+					steamidList.Add(player.ID.SteamID.m_SteamID);
+				}
+				friendlyPlayersSaveList[kvp.Key.ID.SteamID.m_SteamID] = steamidList;
+			}
+
 			Log.Write($"Saving {CONFIG_FILE}");
 			try {
 				JsonSerializer json = new JsonSerializer();
 				JsonTextWriter jsonWriter = new JsonTextWriter(new StreamWriter(ConfigFilePath));
-				json.Serialize(jsonWriter, friendlyPlayers);
-				jsonWriter.Flush();
+				json.Serialize(jsonWriter, friendlyPlayersSaveList);
+				jsonWriter.Close();
 			} catch (Exception e) {
 				Log.Write($"Error saving {CONFIG_FILE}: {e.Message}");
 			}
 		}
+
 
 		// Load config from JSON file
 		public static void Load()
@@ -181,7 +202,18 @@ namespace AngryGuards {
 			try {
 				JsonSerializer json = new JsonSerializer();
 				JsonTextReader jsonReader = new JsonTextReader(new StreamReader(ConfigFilePath));
-				friendlyPlayers = json.Deserialize<Dictionary<Players.Player, List<Players.Player>>>(jsonReader);
+				friendlyPlayersSaveList = json.Deserialize<Dictionary<ulong, List<ulong>>>(jsonReader);
+				if (friendlyPlayersSaveList != null) {
+					foreach (KeyValuePair<ulong, List<ulong>> kvp in friendlyPlayersSaveList) {
+						Players.Player owner = Players.PlayerDatabaseBySteamID[new CSteamID(kvp.Key)];
+						friendlyPlayers[owner] = new List<Players.Player>();
+						if (kvp.Value != null) {
+							foreach (ulong steamid in kvp.Value) {
+								friendlyPlayers[owner].Add(Players.PlayerDatabaseBySteamID[new CSteamID(steamid)]);
+							}
+						}
+					}
+				}
 			} catch (Exception e) {
 				Log.Write($"Error parsing {CONFIG_FILE}: {e.Message}");
 			}

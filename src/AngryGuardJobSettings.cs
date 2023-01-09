@@ -31,36 +31,8 @@ namespace AngryGuards {
 		public float SleepSafetyPeriod;
 		public string OnHitAudio;
 
-/*
-		public float NPCShopGameHourMinimum
-		{
-			get
-			{
-				ServerManager.ServerSettingsData.TimeSettings settings = TimeCycle.Settings;
-				if (this.SleepType == EGuardSleepType.Day || this.SleepType != EGuardSleepType.Night)
-				{
-					return settings.GuardShiftNightEnd - 0.1f;
-				}
-				return settings.GuardShiftDayEnd - 0.1f;
-			}
-		}
 
-		public float NPCShopGameHourMaximum
-		{
-			get
-			{
-				ServerManager.ServerSettingsData.TimeSettings settings = TimeCycle.Settings;
-				if (this.SleepType == EGuardSleepType.Day || this.SleepType != EGuardSleepType.Night)
-				{
-					return settings.GuardShiftNightEnd + 0.1f;
-				}
-				return settings.GuardShiftDayEnd + 0.1f;
-			}
-		}
-*/
-
-/*
-		public bool ToSleep
+		public override bool ToSleep
 		{
 			get
 			{
@@ -78,7 +50,12 @@ namespace AngryGuards {
 				return true;
 			}
 		}
-*/
+
+
+		public AngryGuardJobSettings()
+		{
+		}
+
 
 		public AngryGuardJobSettings(string blockTypeKey, string npcTypeKey, EGuardSleepType sleepType, int damage, int range, int cooldownShot, string shootAudio, InventoryItem shootItem, InventoryItem recruitmentItem)
 		{
@@ -104,6 +81,7 @@ namespace AngryGuards {
 			this.SleepSafetyPeriod = 1f;
 			this.OnHitAudio = "fleshHit";
 		}
+
 
 		// perform guard duty
 		public override void OnNPCAtJob(BlockJobInstance blockInstance, ref NPCBase.NPCState state)
@@ -142,6 +120,7 @@ namespace AngryGuards {
 			return;
 		}
 
+
 		// Do shoot 
 		public void ShootAtTarget(AngryGuardJobInstance instance, ref NPCBase.NPCState state)
 		{
@@ -169,17 +148,14 @@ namespace AngryGuards {
 			}
 		}
 
-		// unused for guards
+
 		public override void OnNPCAtStockpile(BlockJobInstance blockInstance, ref NPCBase.NPCState state)
 		{
+			state.JobIsDone = true;
+			state.SetCooldown(0.5, 1.5);
+			state.Inventory.Dump(blockInstance.Owner);
 		}
 
-/*
-		// unused for guards
-		public void OnGoalChanged(BlockJobInstance blockInstance, INPCGoal goalOld, INPCGoal goalNew)
-		{
-		}
-*/
 
 		// get location for the NPC to walk to
 		public override Jobs.JobLocation GetJobLocation(BlockJobInstance blockInstance)
@@ -189,6 +165,7 @@ namespace AngryGuards {
 			jobLocation.AllowStandingAtOffset = false;
 			return jobLocation;
 		}
+
 
 	} // class
 

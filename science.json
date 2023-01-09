@@ -3,15 +3,15 @@
 		"icon": "./icons/angryguardbow.png",
 		"key": "angryguards.research.angryguardbow",
 		"itemRequirements" : [
-			{ "type": "bronzearrow", "amount": 50 },
+			{ "type": "copperarrow", "amount": 50 },
 			{ "type": "bow" }
 		],
 		"dependencies": [
 			"pipliz.archery"
 		],
 		"unlocksRecipes": [
-			"angryguards.crafter.guardbowday",
-			"angryguards.crafter.guardbownight"
+			"angryguards.jobblockcrafter.guardbowday",
+			"angryguards.jobblockcrafter.guardbownight"
 		]
 	},
 	{
@@ -26,15 +26,15 @@
 			"angryguards.research.angryguardbow"
 		],
 		"unlocksRecipes": [
-			"angryguards.crafter.guardcrossbowday",
-			"angryguards.crafter.guardcrossbownight"
+			"angryguards.jobblockcrafter.guardcrossbowday",
+			"angryguards.jobblockcrafter.guardcrossbownight"
 		]
 	},
 	{
 		"icon": "./icons/angryguardmusket.png",
 		"key": "angryguards.research.angryguardmusket",
 		"itemRequirements" : [
-			{ "type": "leadbullet", "amount": 50 },
+			{ "type": "musketammo", "amount": 50 },
 			{ "type": "musket" }
 		],
 		"dependencies": [
@@ -42,8 +42,8 @@
 			"angryguards.research.angryguardcrossbow"
 		],
 		"unlocksRecipes": [
-			"angryguards.crafter.guardmusketday",
-			"angryguards.crafter.guardmusketnight"
+			"angryguards.jobblockcrafter.guardmusketday",
+			"angryguards.jobblockcrafter.guardmusketnight"
 		]
 	}
 ]
