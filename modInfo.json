@@ -2,7 +2,7 @@
   {
     "name" : "Angry Guards",
     "description" : "Guards that target enemy players",
-    "version" : "1.1.0",
+    "version" : "1.1.1",
 	"isoptional" : true,
 	"enableddefault" : true,
     "dllpath" : "AngryGuards.dll",
@@ -30,6 +30,9 @@
 	  }
     ],
 	"patchnotes": [
+		{ "version": "1.1.1", "notes": [
+			"fixed two missing textures"
+		] },
 		{ "version": "1.1.0", "notes": [
 			"updated for Colony Survival 0.9"
 		] },
